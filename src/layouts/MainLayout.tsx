@@ -2,14 +2,20 @@ import { FC } from "react";
 import { Outlet } from "react-router-dom";
 import { Layout } from "antd";
 import styes from "./MainLayout.module.scss";
+import Logo from "../components/Logo";
+import UserInfo from "../components/UserInfo";
 
 const MainLayout: FC = () => {
   const { Header, Content, Footer } = Layout;
   return (
     <Layout>
       <Header className={styes.header}>
-        <div className={styes.left}>Logo</div>
-        <div className={styes.right}>Login</div>
+        <div className={styes.left}>
+          <Logo></Logo>
+        </div>
+        <div className={styes.right}>
+          <UserInfo></UserInfo>
+        </div>
       </Header>
       <Content className={styes.main}>
         <Outlet></Outlet>
