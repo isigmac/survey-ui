@@ -1,16 +1,8 @@
-import { useTitle } from "ahooks";
-import List from "./pages/List";
-import styles from "./App.module.scss";
+import { RouterProvider } from "react-router-dom";
+import routerConfig from "./router";
 
 function App() {
-  useTitle("Survey FE");
-
-  return (
-    <div className={styles.App}>
-      <h1 style={{ background: "yellow" }}>Survey FE</h1>
-      <List />
-    </div>
-  );
+  return <RouterProvider router={routerConfig}></RouterProvider>;
 }
 
 export default App;
