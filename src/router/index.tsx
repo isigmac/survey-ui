@@ -56,4 +56,10 @@ export default router;
 export const HOME_PATHNAME = "/";
 export const LOGIN_PATHNAME = "/login";
 export const REGISTER_PATHNAME = "/register";
+
 export const MANAGE_LIST_PATHNAME = "/manage/list";
+export const MANAGE_STAR_PATHNAME = "/manage/star";
+export const MANAGE_TRASH_PATHNAME = "/manage/trash";
+
+export const QUESTION_EDIT_PATHNAME = "/question/edit";
+export const QUESTION_STATISTICS_PATHNAME = "/question/statistics";

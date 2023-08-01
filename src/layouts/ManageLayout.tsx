@@ -1,17 +1,15 @@
 import { FC } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import {
-  PlusOutlined,
-  BarsOutlined,
-  StarOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { PlusOutlined, BarsOutlined, StarOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Space, Divider } from "antd";
 
 import styles from "./ManageLayout.module.scss";
 
+import { MANAGE_LIST_PATHNAME, MANAGE_STAR_PATHNAME, MANAGE_TRASH_PATHNAME } from "../router";
+
 const ManageLayout: FC = () => {
   const nav = useNavigate();
+  const { pathname } = useLocation();
 
   return (
     <div className={styles.container}>
@@ -22,7 +20,7 @@ const ManageLayout: FC = () => {
           </Button>
           <Divider style={{ borderTop: "transparent" }} />
           <Button
-            type="text"
+            type={pathname.startsWith(MANAGE_LIST_PATHNAME) ? "default" : "text"}
             size="large"
             icon={<BarsOutlined />}
             block
@@ -31,7 +29,7 @@ const ManageLayout: FC = () => {
             My Survey
           </Button>
           <Button
-            type="text"
+            type={pathname.startsWith(MANAGE_STAR_PATHNAME) ? "default" : "text"}
             size="large"
             icon={<StarOutlined />}
             block
@@ -40,7 +38,7 @@ const ManageLayout: FC = () => {
             Star Survey
           </Button>
           <Button
-            type="text"
+            type={pathname.startsWith(MANAGE_TRASH_PATHNAME) ? "default" : "text"}
             size="large"
             icon={<DeleteOutlined />}
             block

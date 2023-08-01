@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useTitle } from "ahooks";
 
-import styles from "./List.module.scss";
+import styles from "./common.module.scss";
 import QuestionCard from "../../components/QuestionCard";
 
 const questions = [
@@ -10,7 +10,7 @@ const questions = [
     _id: "q1",
     title: "question1",
     isPublished: false,
-    isStart: false,
+    isStar: false,
     answerCount: 3,
     createdAt: "July 31st 12:35",
   },
@@ -18,7 +18,7 @@ const questions = [
     _id: "q2",
     title: "question2",
     isPublished: false,
-    isStart: false,
+    isStar: false,
     answerCount: 2,
     createdAt: "July 31st 12:35",
   },
@@ -26,7 +26,7 @@ const questions = [
     _id: "q3",
     title: "question3",
     isPublished: false,
-    isStart: false,
+    isStar: false,
     answerCount: 1,
     createdAt: "July 31st 12:35",
   },
@@ -34,7 +34,7 @@ const questions = [
     _id: "q4",
     title: "question4",
     isPublished: true,
-    isStart: true,
+    isStar: true,
     answerCount: 5,
     createdAt: "July 31st 12:35",
   },
@@ -55,12 +55,13 @@ const List: FC = () => {
         <div className={styles.right}>Search</div>
       </div>
       <div className={styles.content}>
-        {questionList.map((q) => {
-          const { _id } = q;
-          return <QuestionCard key={_id} {...q}></QuestionCard>;
-        })}
+        {questionList.length > 0 &&
+          questionList.map((q) => {
+            const { _id } = q;
+            return <QuestionCard key={_id} {...q}></QuestionCard>;
+          })}
       </div>
-      <div className={styles.footer}>footer</div>
+      <div className={styles.footer}>load more... </div>
     </>
   );
 };

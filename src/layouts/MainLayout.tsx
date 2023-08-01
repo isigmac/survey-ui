@@ -20,9 +20,7 @@ const MainLayout: FC = () => {
       <Content className={styes.main}>
         <Outlet></Outlet>
       </Content>
-      <Footer className={styes.footer}>
-        Survey &copy; 2023 - present. Created by CY
-      </Footer>
+      <Footer className={styes.footer}>Survey·&copy;·2023·-·present.·Created·by·C</Footer>
     </Layout>
   );
 };

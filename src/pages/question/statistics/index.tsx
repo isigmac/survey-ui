@@ -1,9 +1,12 @@
 import { FC } from "react";
+import { useParams } from "react-router-dom";
 
 const Statistics: FC = () => {
+  const { id } = useParams();
+
   return (
     <div>
-      <p>Statistics</p>
+      <p>Statistics: {id}</p>
     </div>
   );
 };

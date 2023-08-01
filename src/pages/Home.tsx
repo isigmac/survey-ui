@@ -14,9 +14,7 @@ const Home: FC = () => {
     <div className={styles.container}>
       <div className={styles.info}>
         <Title>Survey | Vote online</Title>
-        <Paragraph>
-          Total Survey 100, published Survey 90, completed Survey 821{" "}
-        </Paragraph>
+        <Paragraph>Total Survey 100, published Survey 90, completed Survey 821 </Paragraph>
         <div>
           <Button type="primary" onClick={() => nav(MANAGE_LIST_PATHNAME)}>
             Quick Start
