@@ -1,24 +1,27 @@
 import { FC } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { Button } from "antd";
+import { useNavigate } from "react-router-dom";
+import { Button, Typography } from "antd";
 
-import { LOGIN_PATHNAME, REGISTER_PATHNAME } from "../router";
+import { MANAGE_LIST_PATHNAME } from "../router";
+
+import styles from "./Home.module.scss";
 
 const Home: FC = () => {
   const nav = useNavigate();
-
-  function clickHandler() {
-    // nav("/login?b=20");
-    nav({ pathname: LOGIN_PATHNAME, search: "b=20" });
-  }
+  const { Title, Paragraph } = Typography;
 
   return (
-    <div>
-      <p>Home</p>
-      <div>
-        <Button onClick={clickHandler}>Login</Button>
-        &nbsp;
-        <Link to={REGISTER_PATHNAME}>Register/user-info</Link>
+    <div className={styles.container}>
+      <div className={styles.info}>
+        <Title>Survey | Vote online</Title>
+        <Paragraph>
+          Total Survey 100, published Survey 90, completed Survey 821{" "}
+        </Paragraph>
+        <div>
+          <Button type="primary" onClick={() => nav(MANAGE_LIST_PATHNAME)}>
+            Quick Start
+          </Button>
+        </div>
       </div>
     </div>
   );
