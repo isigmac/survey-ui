@@ -1,0 +1,12 @@
+.container{
+    display: flex;
+    height: calc(100vh - 64px - 65px);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #fff;
+
+    .form{
+        width: 600px;
+    }
+}

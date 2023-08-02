@@ -10,12 +10,12 @@ import styles from "./Register.module.scss";
 
 const { Title } = Typography;
 
-interface IUser {
+type IUser = {
   username: string;
   nickname: string;
   password: string;
   confirm: string;
-}
+};
 
 const Register: FC = () => {
   const onFinish = (values: IUser) => {
