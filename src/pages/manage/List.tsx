@@ -2,6 +2,8 @@ import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useTitle } from "ahooks";
 
+import { Typography } from "antd";
+
 import styles from "./common.module.scss";
 import QuestionCard from "../../components/QuestionCard";
 
@@ -43,6 +45,8 @@ const questions = [
 const List: FC = () => {
   useTitle("Survey - My Survey");
 
+  const { Title } = Typography;
+
   const [searchParams] = useSearchParams();
   console.log("keyword:", searchParams.get("keyword"));
 
@@ -50,10 +54,15 @@ const List: FC = () => {
 
   return (
     <>
+      {/* header  */}
       <div className={styles.header}>
-        <div className={styles.left}>My Survey</div>
+        <div className={styles.left}>
+          <Title level={3}>My Survey</Title>
+        </div>
         <div className={styles.right}>Search</div>
       </div>
+
+      {/* content  */}
       <div className={styles.content}>
         {questionList.length > 0 &&
           questionList.map((q) => {
