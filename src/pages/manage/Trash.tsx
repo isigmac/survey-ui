@@ -5,6 +5,7 @@ import { Typography, Empty, Table, Tag, Space, Button, Modal } from "antd";
 import { StarOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
 import styles from "./common.module.scss";
+import ListSearch from "../../components/ListSearch";
 
 const questions = [
   {
@@ -123,7 +124,9 @@ const Trash: FC = () => {
         <div className={styles.left}>
           <Title level={3}>Trash</Title>
         </div>
-        <div className={styles.right}>Search</div>
+        <div className={styles.right}>
+          <ListSearch></ListSearch>
+        </div>
       </div>
 
       {/* content  */}

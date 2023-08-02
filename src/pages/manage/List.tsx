@@ -6,6 +6,7 @@ import { Typography } from "antd";
 
 import styles from "./common.module.scss";
 import QuestionCard from "../../components/QuestionCard";
+import ListSearch from "../../components/ListSearch";
 
 const questions = [
   {
@@ -59,7 +60,9 @@ const List: FC = () => {
         <div className={styles.left}>
           <Title level={3}>My Survey</Title>
         </div>
-        <div className={styles.right}>Search</div>
+        <div className={styles.right}>
+          <ListSearch></ListSearch>
+        </div>
       </div>
 
       {/* content  */}
