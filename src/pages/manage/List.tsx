@@ -1,8 +1,7 @@
 import { FC } from "react";
-// import { useSearchParams } from "react-router-dom";
-import { useTitle, useRequest } from "ahooks";
+import { useTitle } from "ahooks";
 
-import { getQuestionListService } from "../../services/question";
+import useLoadQuestionListData from "../../hooks/useLoadQuestionListData.ts";
 
 // ui
 import { Typography, Spin } from "antd";
@@ -16,7 +15,7 @@ const List: FC = () => {
 
   const { Title } = Typography;
 
-  const { data = {}, loading } = useRequest(getQuestionListService);
+  const { data = {}, loading } = useLoadQuestionListData();
   const { list = [], total = 0 } = data;
 
   return (

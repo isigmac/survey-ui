@@ -18,9 +18,14 @@ export async function createQuestionService(): Promise<ResponseDataType> {
 }
 
 //get question list
-export async function getQuestionListService(): Promise<ResponseDataType> {
+type SearchCriteria = {
+  keyword: string;
+};
+export async function getQuestionListService(criteria: Partial<SearchCriteria>): Promise<ResponseDataType> {
   const url = `/api/questions`;
-  const data = (await axios.get(url)) as ResponseDataType;
+  const data = (await axios.get(url, { params: criteria })) as ResponseDataType;
+
+  // {a:10, b:20} => api/questions?a=10&b=20
 
   return data;
 }
