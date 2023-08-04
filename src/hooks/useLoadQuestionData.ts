@@ -1,25 +1,20 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
+import { useRequest } from "ahooks";
 
 import { getQuestionService } from "../services/question";
 
 function useLoadQuestionData() {
   const { id = "" } = useParams();
 
-  const [loading, setLoading] = useState(true);
-  const [questionData, setQuestionData] = useState({});
+  async function getQuestionData() {
+    const data = await getQuestionService(id);
+    return data;
+  }
 
-  useEffect(() => {
-    async function fn() {
-      const data = await getQuestionService(id);
-      setQuestionData(data);
-      setLoading(false);
-    }
+  const { loading, data, error } = useRequest(getQuestionData);
 
-    fn();
-  }, [id]);
-
-  return { id, loading, questionData };
+  return { id, loading, data, error };
 }
 
 export default useLoadQuestionData;
