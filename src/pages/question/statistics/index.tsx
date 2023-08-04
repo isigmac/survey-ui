@@ -1,12 +1,14 @@
 import { FC } from "react";
-import { useParams } from "react-router-dom";
+
+import useLoadQuestionData from "../../../hooks/useLoadQuestionData.ts";
 
 const Statistics: FC = () => {
-  const { id } = useParams();
+  const { id, loading, questionData } = useLoadQuestionData();
 
   return (
     <div>
       <p>Statistics: {id}</p>
+      {loading ? <p>loading</p> : <p>{JSON.stringify(questionData)}</p>}
     </div>
   );
 };
