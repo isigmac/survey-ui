@@ -12,7 +12,10 @@ function useLoadQuestionData() {
     return data;
   }
 
-  const { loading, data, error } = useRequest(getQuestionData);
+  const { loading, data, error } = useRequest(getQuestionData, {
+    refreshOnWindowFocus: true,
+    // pollingInterval: 3000,
+  });
 
   return { id, loading, data, error };
 }

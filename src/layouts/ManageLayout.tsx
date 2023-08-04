@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useRequest } from "ahooks";
-import { postQuestionService as createQuestionService } from "../services/question";
+import { createQuestionService } from "../services/question";
 
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { MANAGE_LIST_PATHNAME, MANAGE_STAR_PATHNAME, MANAGE_TRASH_PATHNAME, QUESTION_EDIT_PATHNAME } from "../router";
