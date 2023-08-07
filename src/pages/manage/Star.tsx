@@ -9,6 +9,7 @@ import { Typography, Empty, Spin } from "antd";
 import styles from "./common.module.scss";
 import QuestionCard from "../../components/QuestionCard";
 import ListSearch from "../../components/ListSearch";
+import ListPagination from "../../components/ListPagination";
 
 const Star: FC = () => {
   useTitle("Star Survey");
@@ -48,7 +49,9 @@ const Star: FC = () => {
       </div>
 
       {/* footer  */}
-      <div className={styles.footer}>pagination... </div>
+      <div className={styles.footer}>
+        <ListPagination total={total}></ListPagination>
+      </div>
     </div>
   );
 };

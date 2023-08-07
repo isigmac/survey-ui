@@ -8,6 +8,7 @@ import { StarOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
 import styles from "./common.module.scss";
 import ListSearch from "../../components/ListSearch";
+import ListPagination from "../../components/ListPagination.tsx";
 
 const columns = [
   {
@@ -46,7 +47,7 @@ const Trash: FC = () => {
   const { confirm } = Modal;
 
   const { data = {}, loading } = useLoadQuestionListData({ isDeleted: true });
-  const { list: questionList = [] } = data;
+  const { list: questionList = [], total = 0 } = data;
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
@@ -91,7 +92,7 @@ const Trash: FC = () => {
       {/* header  */}
       <div className={styles.header}>
         <div className={styles.left}>
-          <Title level={3}>Trash</Title>
+          <Title level={3}>Trash({total})</Title>
         </div>
         <div className={styles.right}>
           <ListSearch></ListSearch>
@@ -110,7 +111,9 @@ const Trash: FC = () => {
       </div>
 
       {/* footer  */}
-      <div className={styles.footer}>pagination... </div>
+      <div className={styles.footer}>
+        <ListPagination total={total}></ListPagination>
+      </div>
     </div>
   );
 };

@@ -22,6 +22,8 @@ type SearchCriteria = {
   keyword: string;
   isStar: boolean;
   isDeleted: boolean;
+  page: number;
+  pageSize: number;
 };
 
 export async function getQuestionListService(criteria: Partial<SearchCriteria>): Promise<ResponseDataType> {
