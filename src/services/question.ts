@@ -34,3 +34,24 @@ export async function getQuestionListService(criteria: Partial<SearchCriteria>):
 
   return data;
 }
+
+export async function updateQuestionService(id: string, payload: { [key: string]: any }): Promise<ResponseDataType> {
+  const url = `/api/questions/${id}`;
+  const data = (await axios.patch(url, { payload: payload })) as ResponseDataType;
+
+  return data;
+}
+
+export async function copyQuestionService(id: string): Promise<ResponseDataType> {
+  const url = `/api/questions/${id}/copy`;
+  const data = (await axios.post(url)) as ResponseDataType;
+
+  return data;
+}
+
+export async function deleteQuestionService(id: string): Promise<ResponseDataType> {
+  const url = `/api/questions/${id}`;
+  const data = (await axios.patch(url, { payload: { isDeleted: true } })) as ResponseDataType;
+
+  return data;
+}

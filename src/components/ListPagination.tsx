@@ -25,9 +25,6 @@ const ListPagination: FC<PropsType> = (props: PropsType) => {
     setCurrent(page);
     const pageSize = parseInt(searchParams.get(LIST_PAGE_SIZE_PARAM_KEY) || `${LIST_PAGE_SIZE}`);
     setPageSize(pageSize);
-
-    console.log("page:", page);
-    console.log("page size:", pageSize);
   }, [searchParams]);
 
   function handlePaginationChange(page: number, pageSize: number) {

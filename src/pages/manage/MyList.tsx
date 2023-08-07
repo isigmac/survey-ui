@@ -15,7 +15,7 @@ const MyList: FC = () => {
 
   const { Title } = Typography;
 
-  const { data = {}, loading } = useLoadQuestionListData({ isStar: true });
+  const { data = {}, loading } = useLoadQuestionListData({});
   const { list = [], total = 0 } = data;
 
   return (
