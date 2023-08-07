@@ -8,7 +8,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
-import List from "../pages/manage/List";
+import MyList from "../pages/manage/MyList";
 import Trash from "../pages/manage/Trash";
 import Star from "../pages/manage/Star";
 import Edit from "../pages/question/edit/Index";
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
         path: "manage",
         element: <ManageLayout />,
         children: [
-          { path: "list", element: <List /> },
+          { path: "list", element: <MyList /> },
           { path: "star", element: <Star /> },
           { path: "trash", element: <Trash /> },
         ],

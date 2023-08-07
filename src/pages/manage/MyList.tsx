@@ -1,21 +1,21 @@
 import { FC } from "react";
 import { useTitle } from "ahooks";
 
-import useLoadQuestionListData from "../../hooks/useLoadQuestionListData.ts";
-
 // ui
-import { Typography, Spin } from "antd";
+import { Typography, Spin, Empty } from "antd";
 
 import styles from "./common.module.scss";
-import QuestionCard from "../../components/QuestionCard";
-import ListSearch from "../../components/ListSearch";
+import ListSearch from "../../components/ListSearch.tsx";
+import QuestionCard from "../../components/QuestionCard.tsx";
+import ListPagination from "../../components/ListPagination.tsx";
+import useLoadQuestionListData from "../../hooks/useLoadQuestionListData.ts";
 
-const List: FC = () => {
+const MyList: FC = () => {
   useTitle("Survey - My Survey");
 
   const { Title } = Typography;
 
-  const { data = {}, loading } = useLoadQuestionListData();
+  const { data = {}, loading } = useLoadQuestionListData({ isStar: true });
   const { list = [], total = 0 } = data;
 
   return (
@@ -37,16 +37,22 @@ const List: FC = () => {
             <Spin></Spin>
           </div>
         )}
-        {!loading &&
-          list.length > 0 &&
+        {!loading && list.length === 0 ? (
+          <Empty description="no data found" />
+        ) : (
           list.map((q: any) => {
             const { _id } = q;
             return <QuestionCard key={_id} {...q}></QuestionCard>;
-          })}
+          })
+        )}
       </div>
-      <div className={styles.footer}>load more... </div>
+
+      {/* footer  */}
+      <div className={styles.footer}>
+        <ListPagination total={total}></ListPagination>
+      </div>
     </>
   );
 };
 
-export default List;
+export default MyList;
