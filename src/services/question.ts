@@ -37,7 +37,7 @@ export async function getQuestionListService(criteria: Partial<SearchCriteria>):
 
 export async function updateQuestionService(id: string, payload: { [key: string]: any }): Promise<ResponseDataType> {
   const url = `/api/questions/${id}`;
-  const data = (await axios.patch(url, { payload: payload })) as ResponseDataType;
+  const data = (await axios.patch(url, { data: payload })) as ResponseDataType;
 
   return data;
 }
@@ -51,7 +51,23 @@ export async function copyQuestionService(id: string): Promise<ResponseDataType>
 
 export async function deleteQuestionService(id: string): Promise<ResponseDataType> {
   const url = `/api/questions/${id}`;
-  const data = (await axios.patch(url, { payload: { isDeleted: true } })) as ResponseDataType;
+  const data = (await axios.patch(url, { data: { isDeleted: true } })) as ResponseDataType;
 
   return data;
+}
+
+export async function purgeQuestionService(ids: string[]): Promise<boolean> {
+  const url = `/api/questions`;
+  (await axios.delete(url, { data: ids })) as ResponseDataType;
+
+  return true;
+}
+
+export async function recoverQuestionService(ids: string[]): Promise<boolean> {
+  for await (const id of ids) {
+    const url = `/api/questions/${id}`;
+    await axios.patch(url, { data: { isDeleted: false } });
+  }
+
+  return true;
 }

@@ -18,6 +18,7 @@ function useLoadQuestionListData(criteria: Partial<OptionType> = {}) {
     data = {},
     loading,
     error,
+    refresh,
   } = useRequest(
     async () => {
       const _keyword: string = searchParams.get(LIST_SEARCH_KEY) || ""; //default value is an empty string, then keyword is string
@@ -39,6 +40,6 @@ function useLoadQuestionListData(criteria: Partial<OptionType> = {}) {
     }
   );
 
-  return { loading, data, error };
+  return { loading, data, error, refresh };
 }
 export default useLoadQuestionListData;

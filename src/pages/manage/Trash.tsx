@@ -1,9 +1,11 @@
 import { FC, useState } from "react";
-import { useTitle } from "ahooks";
+import { useTitle, useRequest } from "ahooks";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData.ts";
 
+import { purgeQuestionService, recoverQuestionService } from "../../services/question.ts";
+
 //ui
-import { Typography, Empty, Table, Tag, Space, Button, Modal, Spin } from "antd";
+import { Typography, Empty, Table, Tag, Space, Button, Modal, Spin, message } from "antd";
 import { StarOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
 import styles from "./common.module.scss";
@@ -46,28 +48,72 @@ const Trash: FC = () => {
   const { Title } = Typography;
   const { confirm } = Modal;
 
-  const { data = {}, loading } = useLoadQuestionListData({ isDeleted: true });
+  const { data = {}, loading, refresh } = useLoadQuestionListData({ isDeleted: true });
   const { list: questionList = [], total = 0 } = data;
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+
+  // #region delete
+  const { loading: purgeLoading, run: purgeQuestion } = useRequest(
+    async () => await purgeQuestionService(selectedKeys),
+    {
+      manual: true,
+      debounceWait: 1000,
+      onSuccess() {
+        message.success("Purge completed");
+        setSelectedKeys([]);
+        refresh();
+      },
+    }
+  );
 
   function handleDelete() {
     confirm({
       title: "confirm to delete?",
       icon: <ExclamationCircleOutlined />,
       content: "Survey can not recover after this action.",
-      onOk: () => alert(JSON.stringify(selectedKeys)),
+      onOk: purgeQuestion,
     });
   }
+
+  // #endregion
+
+  // #region recover
+  const { loading: recoverLoading, run: recoverQuestion } = useRequest(
+    async () => await recoverQuestionService(selectedKeys),
+    {
+      manual: true,
+      debounceWait: 1000,
+      onSuccess() {
+        message.success("recovered");
+        setSelectedKeys([]);
+        refresh();
+      },
+    }
+  );
+
+  function handleRecover() {
+    confirm({
+      title: "confirm to recover?",
+      icon: <ExclamationCircleOutlined />,
+      // content: "Survey can not recover after this action.",
+      onOk: recoverQuestion,
+    });
+  }
+  // #endregion
 
   const TableElement = (
     <>
       <div style={{ marginBottom: 16 }}>
         <Space>
-          <Button type="primary" disabled={selectedKeys.length === 0}>
+          <Button
+            type="primary"
+            onClick={handleRecover}
+            disabled={selectedKeys.length === 0 || purgeLoading || recoverLoading}
+          >
             Recover
           </Button>
-          <Button danger disabled={selectedKeys.length === 0} onClick={handleDelete}>
+          <Button danger onClick={handleDelete} disabled={selectedKeys.length === 0 || purgeLoading || recoverLoading}>
             Delete
           </Button>
         </Space>

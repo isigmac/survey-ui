@@ -66,8 +66,8 @@ const QuestionCard: FC<QuestionCardProps> = (props) => {
     async () => await copyQuestionService(_id),
     {
       manual: true,
-      onSuccess(reponse) {
-        const { id } = reponse;
+      onSuccess(response) {
+        const { id } = response;
         message.success("Copy completed, new survey:" + id);
         api.info({
           message: "Notification",
@@ -106,7 +106,6 @@ const QuestionCard: FC<QuestionCardProps> = (props) => {
   return (
     <Card hoverable={true} style={{ marginTop: 16, width: "100%" }}>
       {contextHolder}
-      {isDeleted}: {isDeletedState}
       {/* top  */}
       <div className={styles.title}>
         <div className={styles.left}>
