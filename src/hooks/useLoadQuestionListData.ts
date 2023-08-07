@@ -5,9 +5,14 @@ import { getQuestionListService } from "../services/question";
 
 import { LIST_SEARCH_KEY } from "../constant";
 
-function useLoadQuestionListData() {
+type OptionType = {
+  isStar: boolean;
+  isDeleted: boolean;
+};
+
+function useLoadQuestionListData(criteria: Partial<OptionType> = {}) {
+  const { isStar: _isStar = false, isDeleted: _isDeleted = false } = criteria;
   const [searchParams] = useSearchParams();
-  console.log(LIST_SEARCH_KEY, searchParams.get(LIST_SEARCH_KEY));
 
   const {
     data = {},
@@ -15,9 +20,9 @@ function useLoadQuestionListData() {
     error,
   } = useRequest(
     async () => {
-      const keyword: string = searchParams.get(LIST_SEARCH_KEY) || ""; //default value is an empty string, then keyword is string
+      const _keyword: string = searchParams.get(LIST_SEARCH_KEY) || ""; //default value is an empty string, then keyword is string
 
-      const data = await getQuestionListService({ keyword });
+      const data = await getQuestionListService({ keyword: _keyword, isDeleted: _isDeleted, isStar: _isStar });
 
       return data;
     },

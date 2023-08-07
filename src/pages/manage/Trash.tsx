@@ -1,46 +1,13 @@
 import { FC, useState } from "react";
 import { useTitle } from "ahooks";
+import useLoadQuestionListData from "../../hooks/useLoadQuestionListData.ts";
 
-import { Typography, Empty, Table, Tag, Space, Button, Modal } from "antd";
+//ui
+import { Typography, Empty, Table, Tag, Space, Button, Modal, Spin } from "antd";
 import { StarOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
 import styles from "./common.module.scss";
 import ListSearch from "../../components/ListSearch";
-
-const questions = [
-  {
-    _id: "q1",
-    title: "question1",
-    isPublished: false,
-    isStar: false,
-    answerCount: 3,
-    createdAt: "July 31st 12:35",
-  },
-  {
-    _id: "q2",
-    title: "question2",
-    isPublished: false,
-    isStar: false,
-    answerCount: 2,
-    createdAt: "July 31st 12:35",
-  },
-  {
-    _id: "q3",
-    title: "question3",
-    isPublished: false,
-    isStar: false,
-    answerCount: 1,
-    createdAt: "July 31st 12:35",
-  },
-  {
-    _id: "q4",
-    title: "question4",
-    isPublished: true,
-    isStar: true,
-    answerCount: 5,
-    createdAt: "July 31st 12:35",
-  },
-];
 
 const columns = [
   {
@@ -78,7 +45,9 @@ const Trash: FC = () => {
   const { Title } = Typography;
   const { confirm } = Modal;
 
-  const [questionList] = useState(questions);
+  const { data = {}, loading } = useLoadQuestionListData({ isDeleted: true });
+  const { list: questionList = [] } = data;
+
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
   function handleDelete() {
@@ -131,7 +100,12 @@ const Trash: FC = () => {
 
       {/* content  */}
       <div className={styles.content}>
-        {questionList.length === 0 && <Empty description="no data found" />}
+        {loading && (
+          <div style={{ textAlign: "center" }}>
+            <Spin></Spin>
+          </div>
+        )}
+        {!loading && questionList.length === 0 && <Empty description="no data found" />}
         {questionList.length > 0 && TableElement}
       </div>
 
