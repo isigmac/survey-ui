@@ -1,11 +1,14 @@
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRequest } from "ahooks";
+
+import { createUserService } from "../services/user";
 
 import { LOGIN_PATHNAME } from "../router";
 
-import { Typography, Space, Form, Input, Button } from "antd";
+// ui
+import { Typography, Space, Form, Input, Button, message } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
-
 import styles from "./Register.module.scss";
 
 const { Title } = Typography;
@@ -18,8 +21,26 @@ type IUser = {
 };
 
 const Register: FC = () => {
+  // #region register
+  const nav = useNavigate();
+  const { run: createUser } = useRequest(
+    async (values: IUser) => {
+      const { username, nickname, password } = values;
+      return await createUserService(username, password, nickname);
+    },
+    {
+      manual: true,
+      onSuccess() {
+        message.success("User Created. Please login.");
+        nav(LOGIN_PATHNAME);
+      },
+    }
+  );
+
+  // #endregion
+
   const onFinish = (values: IUser) => {
-    console.log(values);
+    createUser(values);
   };
 
   return (
