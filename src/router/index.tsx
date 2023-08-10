@@ -63,3 +63,15 @@ export const MANAGE_TRASH_PATHNAME = "/manage/trash";
 
 export const QUESTION_EDIT_PATHNAME = "/question/edit";
 export const QUESTION_STATISTICS_PATHNAME = "/question/statistics";
+
+export function isLoginOrRegister(path: string) {
+  if ([LOGIN_PATHNAME, REGISTER_PATHNAME].includes(path)) return true;
+
+  return false;
+}
+
+export function isNoNeedLogin(path: string) {
+  if ([HOME_PATHNAME, LOGIN_PATHNAME, REGISTER_PATHNAME].includes(path)) return true;
+
+  return false;
+}
