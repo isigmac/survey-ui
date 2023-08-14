@@ -1,16 +1,17 @@
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
 import useLoadUserData from "../hooks/useLoadUserData";
-import { Spin } from "antd";
 import useAutoNavigation from "../hooks/useAutoNavigation";
+
+//ui
+import { Spin } from "antd";
 
 const QuestionLayout: FC = () => {
   const { waitingUserData } = useLoadUserData();
   useAutoNavigation(waitingUserData);
 
   return (
-    <div>
-      <p>QuestionLayout</p>
+    <div style={{ height: "100vh" }}>
       <div>
         {waitingUserData ? (
           <div style={{ textAlign: "center", verticalAlign: "middle", marginTop: "60px" }}>
