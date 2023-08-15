@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-// import useLoadQuestionData from "../../../hooks/useLoadQuestionData";
+import useLoadQuestionData from "../../../hooks/useLoadQuestionData";
 
 //ui
 
@@ -8,8 +8,8 @@ import styles from "./Index.module.scss";
 import EditCanvas from "./EditCanvas";
 
 const Edit: FC = () => {
-  // const { id, data, loading } = useLoadQuestionData();
-  // console.log(JSON.stringify(data));
+  const { loading } = useLoadQuestionData();
+
   return (
     <div className={styles.container}>
       <div style={{ backgroundColor: "white", height: "40px " }}> header</div>
@@ -20,7 +20,7 @@ const Edit: FC = () => {
           <div className={styles.main}>
             <div className={styles["canvas-wrapper"]}>
               <div style={{ height: "900px" }}>
-                <EditCanvas></EditCanvas>
+                <EditCanvas loading={loading}></EditCanvas>
               </div>
             </div>
           </div>

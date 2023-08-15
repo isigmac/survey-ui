@@ -1,23 +1,44 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
 import { useRequest } from "ahooks";
+import { resetComponentsAction } from "../store/componentsReducer";
 
 import { getQuestionService } from "../services/question";
 
 function useLoadQuestionData() {
   const { id = "" } = useParams();
+  const dispatch = useDispatch();
 
-  async function getQuestionData() {
-    const data = await getQuestionService(id);
-    return data;
-  }
+  //ajax loading
+  const { loading, data, error, run } = useRequest(
+    async (id: string) => {
+      if (!id) throw new Error("not survey id.");
+      const data = await getQuestionService(id);
 
-  const { loading, data, error } = useRequest(getQuestionData, {
-    refreshOnWindowFocus: true,
-    // pollingInterval: 3000,
-  });
+      return data;
+    },
+    {
+      manual: true,
+    }
+  );
 
-  return { id, loading, data, error };
+  //set redux by data
+  useEffect(() => {
+    if (!data) return;
+
+    const { componentList = [] } = data;
+
+    // store components list into redux store
+    dispatch(resetComponentsAction({ componentList: componentList }));
+  }, [data, dispatch]);
+
+  // execute ajax by id
+  useEffect(() => {
+    run(id);
+  }, [id, run]);
+
+  return { loading, error };
 }
 
 export default useLoadQuestionData;
