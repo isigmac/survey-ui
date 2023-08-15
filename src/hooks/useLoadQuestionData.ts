@@ -29,8 +29,12 @@ function useLoadQuestionData() {
 
     const { componentList = [] } = data;
 
+    //default selected first component
+    let selectedId = "";
+    selectedId = componentList[0]?.fe_id;
+
     // store components list into redux store
-    dispatch(resetComponentsAction({ componentList: componentList }));
+    dispatch(resetComponentsAction({ componentList: componentList, selectedId: selectedId }));
   }, [data, dispatch]);
 
   // execute ajax by id

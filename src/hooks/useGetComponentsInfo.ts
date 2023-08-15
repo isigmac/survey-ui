@@ -1,12 +1,11 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
-import { ComponentInfo } from "../store/componentsReducer";
 
-function useGetComponentsInfo(): ComponentInfo[] {
+function useGetComponentsInfo() {
   const componentState = useSelector((root: RootState) => root.components);
-  const { componentList } = componentState;
+  const { componentList, selectedId } = componentState;
 
-  return componentList;
+  return { componentList, selectedId };
 }
 
 export default useGetComponentsInfo;

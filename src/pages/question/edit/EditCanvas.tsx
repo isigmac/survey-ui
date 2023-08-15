@@ -2,6 +2,8 @@ import { FC } from "react";
 import useGetComponentsInfo from "../../../hooks/useGetComponentsInfo";
 import { ComponentInfo } from "../../../store/componentsReducer";
 import { getComponentConfigByType } from "../../../components/QuestionComponents";
+import { useDispatch } from "react-redux";
+import { selectedIdChangedAction } from "../../../store/componentsReducer";
 
 //ui
 import { Spin } from "antd";
@@ -26,7 +28,13 @@ function buildComponent(componentInfo: ComponentInfo) {
 }
 
 const EditCanvas: FC<PropsType> = ({ loading }) => {
-  const componentList = useGetComponentsInfo();
+  const dispatch = useDispatch();
+  const { componentList, selectedId } = useGetComponentsInfo();
+
+  function handleClick(e: MouseEvent, id: string) {
+    e.stopPropagation(); //阻止冒泡
+    dispatch(selectedIdChangedAction(id));
+  }
 
   if (loading) {
     return (
@@ -36,32 +44,25 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
     );
   }
 
-  const wrapperClass = styles["component-wrapper"];
-  const itemClassName = classNames({
-    [wrapperClass]: true,
-  });
+  const wrapperClassName = styles["component-wrapper"];
+  const selectedClassName = styles["selected"];
 
   return (
     <div className={styles.canvas}>
       {componentList.map((c) => {
         const { fe_id } = c;
+
+        const itemClassName = classNames({
+          [wrapperClassName]: true,
+          [selectedClassName]: fe_id === selectedId,
+        });
+
         return (
-          <div key={fe_id} className={itemClassName}>
+          <div key={fe_id} className={itemClassName} onClick={(e) => handleClick(e, fe_id)}>
             <div className={styles["readonly-component"]}>{buildComponent(c)}</div>
           </div>
         );
       })}
-
-      {/* <div className={itemClassName}>
-        <div className={styles['readonly-component']}>
-          <QuestionTitle></QuestionTitle>
-        </div>
-      </div>
-      <div className={itemClassName}>
-        <div className={styles['readonly-component']}>
-          <QuestionInput></QuestionInput>
-        </div>
-      </div> */}
     </div>
   );
 };
