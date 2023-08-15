@@ -5,6 +5,7 @@ import { FC } from "react";
 //ui
 
 import styles from "./Index.module.scss";
+import EditCanvas from "./EditCanvas";
 
 const Edit: FC = () => {
   // const { id, data, loading } = useLoadQuestionData();
@@ -18,7 +19,9 @@ const Edit: FC = () => {
           <div className={styles.left}>left</div>
           <div className={styles.main}>
             <div className={styles["canvas-wrapper"]}>
-              <div style={{ height: "900px" }}>canvas</div>
+              <div style={{ height: "900px" }}>
+                <EditCanvas></EditCanvas>
+              </div>
             </div>
           </div>
           <div className={styles.right}>right</div>
