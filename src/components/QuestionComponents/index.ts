@@ -13,6 +13,11 @@ export type ComponentConfig = {
 
 const componentConfigList: ComponentConfig[] = [QuestionInputConfigDefault, QuestionTitleConfig];
 
+export const componentConfigGroup = [
+  { id: 1, groupName: "Text Display", components: [QuestionTitleConfig] },
+  { id: 2, groupName: "User Input", components: [QuestionInputConfigDefault] },
+];
+
 export function getComponentConfigByType(type: string): ComponentConfig {
   const config = componentConfigList.find((c) => c.type === type);
   if (config === null) throw new Error("unknown component type");
