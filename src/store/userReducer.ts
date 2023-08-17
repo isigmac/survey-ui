@@ -12,7 +12,8 @@ const userStateSlice = createSlice({
   initialState: INIT_STATE,
   reducers: {
     loginReducer(state: UserStateType, action: PayloadAction<UserStateType>) {
-      return action.payload;
+      state.username = action.payload.username;
+      state.nickname = action.payload.nickname;
     },
 
     logoutReducer: () => INIT_STATE,

@@ -25,7 +25,8 @@ const componentsSlice = createSlice({
   reducers: {
     // reset all components
     resetComponents: (state: ComponentState, action: PayloadAction<ComponentState>) => {
-      return action.payload;
+      state.componentList = action.payload.componentList;
+      state.selectedId = action.payload.selectedId;
     },
 
     // update selected component id

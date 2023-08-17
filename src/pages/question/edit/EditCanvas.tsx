@@ -31,7 +31,7 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
   const dispatch = useDispatch();
   const { componentList, selectedId } = useGetComponentsInfo();
 
-  function handleClick(e: MouseEvent, id: string) {
+  function handleClick(e: React.MouseEvent<Element, MouseEvent>, id: string) {
     e.stopPropagation(); //阻止冒泡
     dispatch(selectedIdChangedAction(id));
   }
@@ -58,7 +58,11 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
         });
 
         return (
-          <div key={fe_id} className={itemClassName} onClick={(e) => handleClick(e, fe_id)}>
+          <div
+            key={fe_id}
+            className={itemClassName}
+            onClick={(e: React.MouseEvent<Element, MouseEvent>) => handleClick(e, fe_id)}
+          >
             <div className={styles["readonly-component"]}>{buildComponent(c)}</div>
           </div>
         );
