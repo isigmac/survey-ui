@@ -17,8 +17,12 @@ const PropComponent: FC<QuestionTitleProps> = (props: QuestionTitleProps) => {
     });
   }, [text, level, isCenter, form]);
 
+  function handleValueChange() {
+    console.log(JSON.stringify(form.getFieldsValue()));
+  }
+
   return (
-    <Form layout="vertical" initialValues={{ text, level, isCenter }} form={form}>
+    <Form layout="vertical" initialValues={{ text, level, isCenter }} onValuesChange={handleValueChange} form={form}>
       <Form.Item
         label="Title"
         name="text"
