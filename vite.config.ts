@@ -1,18 +1,25 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  base: "/survey-ui/",
-  plugins: [react()],
-  server: {
-    proxy: {
-      "/foo": "http://localhost:3001/foo",
-      "/api": {
-        target: "http://localhost:3001",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, "api"),
+export default defineConfig(({ command }) => {
+  const config = {
+    plugins: [react()],
+    base: "/",
+    server: {
+      proxy: {
+        "/foo": "http://localhost:3001/foo",
+        "/api": {
+          target: "http://localhost:3001",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, "api"),
+        },
       },
     },
-  },
+  };
+
+  if (command !== "serve") {
+    config.base = "/survey-ui/";
+  }
+
+  return config;
 });

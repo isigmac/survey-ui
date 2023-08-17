@@ -14,41 +14,44 @@ import Star from "../pages/manage/Star";
 import Edit from "../pages/question/edit/Index";
 import Statistics from "../pages/question/statistics";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <MainLayout />,
-    children: [
-      //home
-      { path: "", element: <Home /> },
-      { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        //home
+        { path: "", element: <Home /> },
+        { path: "login", element: <Login /> },
+        { path: "register", element: <Register /> },
 
-      //manage
-      {
-        path: "manage",
-        element: <ManageLayout />,
-        children: [
-          { path: "list", element: <MyList /> },
-          { path: "star", element: <Star /> },
-          { path: "trash", element: <Trash /> },
-        ],
-      },
+        //manage
+        {
+          path: "manage",
+          element: <ManageLayout />,
+          children: [
+            { path: "list", element: <MyList /> },
+            { path: "star", element: <Star /> },
+            { path: "trash", element: <Trash /> },
+          ],
+        },
 
-      //question
-      {
-        path: "question",
-        element: <QuestionLayout />,
-        children: [
-          { path: "edit/:id", element: <Edit /> },
-          { path: "statistics/:id", element: <Statistics /> },
-        ],
-      },
+        //question
+        {
+          path: "question",
+          element: <QuestionLayout />,
+          children: [
+            { path: "edit/:id", element: <Edit /> },
+            { path: "statistics/:id", element: <Statistics /> },
+          ],
+        },
 
-      { path: "*", element: <NotFound /> }, // 404 路由配置，都写在最后（兜底）
-    ],
-  },
-]);
+        { path: "*", element: <NotFound /> }, // 404 路由配置，都写在最后（兜底）
+      ],
+    },
+  ],
+  { basename: import.meta.env.DEV ? "/" : "/survey-ui/" }
+);
 
 export default router;
 
