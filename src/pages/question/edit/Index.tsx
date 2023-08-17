@@ -9,6 +9,7 @@ import styles from "./Index.module.scss";
 import EditCanvas from "./EditCanvas";
 import { selectedIdChangedAction } from "../../../store/componentsReducer";
 import LeftPanel from "./LeftPanel";
+import RightPanel from "./RightPanel";
 
 const Edit: FC = () => {
   const { loading } = useLoadQuestionData();
@@ -25,10 +26,11 @@ const Edit: FC = () => {
       <div className={styles["content-wrapper"]}>
         <div className={styles.content}>
           <div className={styles.left}>
-            <div style={{ marginLeft: "15px" }}>
+            <div style={{ padding: "15px" }}>
               <LeftPanel></LeftPanel>
             </div>
           </div>
+
           <div className={styles.main} onClick={clearSelectedId}>
             <div className={styles["canvas-wrapper"]}>
               <div style={{ height: "900px" }}>
@@ -36,7 +38,12 @@ const Edit: FC = () => {
               </div>
             </div>
           </div>
-          <div className={styles.right}>right</div>
+
+          <div className={styles.right}>
+            <div style={{ padding: "15px" }}>
+              <RightPanel></RightPanel>
+            </div>
+          </div>
         </div>
       </div>
     </div>

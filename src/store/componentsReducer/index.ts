@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ComponentProps } from "../../components/QuestionComponents";
-// import produce from "immer";
 
 export type ComponentInfo = {
   fe_id: string; // todo
