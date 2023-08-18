@@ -1,7 +1,8 @@
 import { FC } from "react";
+import { useDispatch } from "react-redux";
 import useGetComponentsInfo from "../../../hooks/useGetComponentsInfo";
-import { getComponentConfigByType } from "../../../components/QuestionComponents";
-import { ComponentInfo } from "../../../store/componentsReducer";
+import { getComponentConfigByType, ComponentProps } from "../../../components/QuestionComponents";
+import { ComponentInfo, changeComponentAction } from "../../../store/componentsReducer";
 
 //ui
 
@@ -10,21 +11,27 @@ const NoProp: FC = () => {
 };
 
 const ComponentProp: FC = () => {
-  //   debugger;
+  const dispatch = useDispatch();
   const { selectedComponent } = useGetComponentsInfo();
 
   if (!selectedComponent) return <NoProp />;
 
   const { type, props } = selectedComponent as ComponentInfo;
 
-  //   debugger;
   const componentConfig = getComponentConfigByType(type);
 
   if (!componentConfig) return <NoProp />;
 
+  function changeProps(newProps: ComponentProps) {
+    if (!selectedComponent) return;
+
+    const { fe_id } = selectedComponent;
+    dispatch(changeComponentAction({ fe_id, props: newProps }));
+  }
+
   const { PropComponent } = componentConfig;
 
-  return <PropComponent {...props} />;
+  return <PropComponent {...props} onChange={changeProps} />;
 };
 
 export default ComponentProp;

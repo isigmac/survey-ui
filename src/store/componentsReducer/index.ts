@@ -49,6 +49,15 @@ const componentsSlice = createSlice({
       }
       state.selectedId = newComponent.fe_id;
     },
+
+    //change component props
+    changeComponent(state: ComponentState, action: PayloadAction<{ fe_id: string; props: ComponentProps }>) {
+      const target = state.componentList.find((c) => c.fe_id === action.payload.fe_id);
+
+      if (!target) return;
+
+      target.props = action.payload.props;
+    },
   },
 });
 
@@ -56,6 +65,7 @@ export const {
   resetComponents: resetComponentsAction,
   SelectedIdChanged: selectedIdChangedAction,
   addComponent: addComponentAction,
+  changeComponent: changeComponentAction,
 } = componentsSlice.actions;
 
 export default componentsSlice.reducer;

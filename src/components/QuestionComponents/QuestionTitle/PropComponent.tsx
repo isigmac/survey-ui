@@ -6,7 +6,7 @@ import { QuestionTitleProps } from "./interface";
 import { Form, Input, Select, Checkbox } from "antd";
 
 const PropComponent: FC<QuestionTitleProps> = (props: QuestionTitleProps) => {
-  const { text, level, isCenter } = props;
+  const { text, level, isCenter, onChange } = props;
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -18,7 +18,9 @@ const PropComponent: FC<QuestionTitleProps> = (props: QuestionTitleProps) => {
   }, [text, level, isCenter, form]);
 
   function handleValueChange() {
-    console.log(JSON.stringify(form.getFieldsValue()));
+    if (onChange) {
+      onChange(form.getFieldsValue());
+    }
   }
 
   return (
