@@ -4,6 +4,7 @@ import { ComponentInfo } from "../../../store/componentsReducer";
 import { getComponentConfigByType } from "../../../components/QuestionComponents";
 import { useDispatch } from "react-redux";
 import { selectedIdChangedAction } from "../../../store/componentsReducer";
+import useCanvasShortcuts from "../../../hooks/useCanvasShortcuts";
 
 //ui
 import { Spin } from "antd";
@@ -30,6 +31,8 @@ function buildComponent(componentInfo: ComponentInfo) {
 const EditCanvas: FC<PropsType> = ({ loading }) => {
   const dispatch = useDispatch();
   const { componentList, selectedId } = useGetComponentsInfo();
+
+  useCanvasShortcuts();
 
   function handleClick(e: React.MouseEvent<Element, MouseEvent>, id: string) {
     e.stopPropagation(); //阻止冒泡

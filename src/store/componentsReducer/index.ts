@@ -110,6 +110,28 @@ const componentsSlice = createSlice({
 
       insertComponent(state, newComponent);
     },
+
+    // select previous component
+    selectPreviousComponent(state: ComponentState) {
+      const { selectedId, componentList } = state;
+      if (!state.selectedId) return;
+
+      const index = componentList.findIndex((c) => c.fe_id === selectedId);
+
+      if (index < 1) return;
+      state.selectedId = componentList[index - 1].fe_id;
+    },
+
+    // select next component
+    selectNextComponent(state: ComponentState) {
+      const { selectedId, componentList } = state;
+      if (!state.selectedId) return;
+
+      const index = componentList.findIndex((c) => c.fe_id === selectedId);
+
+      if (index === componentList.length - 1) return;
+      state.selectedId = componentList[index + 1].fe_id;
+    },
   },
 });
 
@@ -123,6 +145,8 @@ export const {
   lockUnlockComponent: lockUnlockComponentAction,
   copyComponent: copyComponentAction,
   pasteComponent: pasteComponentAction,
+  selectPreviousComponent: selectPreviousComponentAction,
+  selectNextComponent: selectNextComponentAction,
 } = componentsSlice.actions;
 
 export default componentsSlice.reducer;
