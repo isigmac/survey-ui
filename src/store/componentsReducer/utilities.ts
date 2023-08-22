@@ -1,13 +1,18 @@
 import { ComponentInfo } from "./index";
 
 export function getNextSelectedId(delete_id: string, componentList: ComponentInfo[]) {
-  const index = componentList.findIndex((c) => c.fe_id === delete_id);
+  const availableComponents = getAvailableComponents();
+  const index = availableComponents.findIndex((c) => c.fe_id === delete_id);
 
   if (index < 0) return "";
 
-  if (index === 0 && componentList.length === 1) return "";
+  if (index === 0 && availableComponents.length === 1) return "";
 
-  if (index === componentList.length - 1) return componentList[index - 1].fe_id;
+  if (index === availableComponents.length - 1) return availableComponents[index - 1].fe_id;
 
-  return componentList[index + 1].fe_id;
+  return availableComponents[index + 1].fe_id;
+
+  function getAvailableComponents() {
+    return componentList.filter((c) => !c.isHidden);
+  }
 }

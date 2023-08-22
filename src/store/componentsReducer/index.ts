@@ -6,6 +6,7 @@ export type ComponentInfo = {
   fe_id: string; // todo
   type: string;
   title: string;
+  isHidden?: boolean;
   props: ComponentProps;
 };
 
@@ -67,7 +68,21 @@ const componentsSlice = createSlice({
 
       const nextSelectedId = getNextSelectedId(selectedId, state.componentList);
       state.componentList.splice(index, 1);
-      if (nextSelectedId !== "") state.selectedId = nextSelectedId;
+
+      state.selectedId = nextSelectedId;
+    },
+
+    //hide selected component
+    hideOrDisplayComponent(state: ComponentState) {
+      const { selectedId } = state;
+      const target = state.componentList.find((c) => c.fe_id === selectedId);
+
+      if (!target) return;
+
+      const nextSelectedId = getNextSelectedId(selectedId, state.componentList);
+      target.isHidden = !target.isHidden;
+
+      state.selectedId = nextSelectedId;
     },
   },
 });
@@ -78,6 +93,7 @@ export const {
   addComponent: addComponentAction,
   changeComponent: changeComponentAction,
   deleteComponent: deleteComponentAction,
+  hideOrDisplayComponent: hideComponentAction,
 } = componentsSlice.actions;
 
 export default componentsSlice.reducer;

@@ -49,24 +49,26 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
 
   return (
     <div className={styles.canvas}>
-      {componentList.map((c) => {
-        const { fe_id } = c;
+      {componentList
+        .filter((c) => c.isHidden === false)
+        .map((c) => {
+          const { fe_id } = c;
 
-        const itemClassName = classNames({
-          [wrapperClassName]: true,
-          [selectedClassName]: fe_id === selectedId,
-        });
+          const itemClassName = classNames({
+            [wrapperClassName]: true,
+            [selectedClassName]: fe_id === selectedId,
+          });
 
-        return (
-          <div
-            key={fe_id}
-            className={itemClassName}
-            onClick={(e: React.MouseEvent<Element, MouseEvent>) => handleClick(e, fe_id)}
-          >
-            <div className={styles["readonly-component"]}>{buildComponent(c)}</div>
-          </div>
-        );
-      })}
+          return (
+            <div
+              key={fe_id}
+              className={itemClassName}
+              onClick={(e: React.MouseEvent<Element, MouseEvent>) => handleClick(e, fe_id)}
+            >
+              <div className={styles["readonly-component"]}>{buildComponent(c)}</div>
+            </div>
+          );
+        })}
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { useDispatch } from "react-redux";
-import { deleteComponentAction } from "../../../store/componentsReducer";
+import { deleteComponentAction, hideComponentAction } from "../../../store/componentsReducer";
 import useGetComponentsInfo from "../../../hooks/useGetComponentsInfo";
 
 //ui
 import { Space, Button, Tooltip } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 
 const EditToolbar: FC = () => {
   const dispatch = useDispatch();
@@ -15,11 +15,23 @@ const EditToolbar: FC = () => {
     dispatch(deleteComponentAction());
   }
 
+  function handleHide() {
+    dispatch(hideComponentAction());
+  }
+
   return (
     <div>
       <Space>
         <Tooltip title="delete">
-          <Button shape="circle" icon={<DeleteOutlined />} onClick={handleDelete} disabled={!selectedId}></Button>
+          <Button shape="circle" icon={<DeleteOutlined />} onClick={handleDelete} disabled={selectedId === ""}></Button>
+        </Tooltip>
+        <Tooltip title="hide">
+          <Button
+            shape="circle"
+            icon={<EyeInvisibleOutlined />}
+            onClick={handleHide}
+            disabled={selectedId === ""}
+          ></Button>
         </Tooltip>
       </Space>
     </div>
