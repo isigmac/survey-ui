@@ -25,4 +25,9 @@
         border-color: #1890ff !important;
     }
 
+    .locked {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+
 }

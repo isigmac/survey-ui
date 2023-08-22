@@ -46,6 +46,7 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
 
   const wrapperClassName = styles["component-wrapper"];
   const selectedClassName = styles["selected"];
+  const lockedClassName = styles["locked"];
 
   return (
     <div className={styles.canvas}>
@@ -57,6 +58,7 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
           const itemClassName = classNames({
             [wrapperClassName]: true,
             [selectedClassName]: fe_id === selectedId,
+            [lockedClassName]: c.isLocked === true,
           });
 
           return (

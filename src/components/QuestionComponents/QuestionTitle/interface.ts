@@ -4,6 +4,7 @@ export type QuestionTitleProps = {
   isCenter?: boolean;
 
   onChange?: (newProps: QuestionTitleProps) => void;
+  disabled?: boolean;
 };
 
 export const QuestionTitleDefault: QuestionTitleProps = {

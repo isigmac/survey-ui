@@ -7,6 +7,7 @@ export type ComponentInfo = {
   type: string;
   title: string;
   isHidden?: boolean;
+  isLocked?: boolean;
   props: ComponentProps;
 };
 
@@ -84,6 +85,15 @@ const componentsSlice = createSlice({
 
       state.selectedId = nextSelectedId;
     },
+
+    //lock selected component
+    lockUnlockComponent(state: ComponentState) {
+      const { selectedId } = state;
+      const target = state.componentList.find((c) => c.fe_id === selectedId);
+      if (!target) return;
+
+      target.isLocked = !target.isLocked;
+    },
   },
 });
 
@@ -94,6 +104,7 @@ export const {
   changeComponent: changeComponentAction,
   deleteComponent: deleteComponentAction,
   hideOrDisplayComponent: hideComponentAction,
+  lockUnlockComponent: lockUnlockComponentAction,
 } = componentsSlice.actions;
 
 export default componentsSlice.reducer;
