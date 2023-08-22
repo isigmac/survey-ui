@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ComponentProps } from "../../components/QuestionComponents";
+import { getNextSelectedId } from "./utilities";
 
 export type ComponentInfo = {
   fe_id: string; // todo
@@ -58,6 +59,16 @@ const componentsSlice = createSlice({
 
       target.props = action.payload.props;
     },
+
+    //delete selected component
+    deleteComponent(state: ComponentState) {
+      const { selectedId } = state;
+      const index = state.componentList.findIndex((c) => c.fe_id === selectedId);
+
+      const nextSelectedId = getNextSelectedId(selectedId, state.componentList);
+      state.componentList.splice(index, 1);
+      if (nextSelectedId !== "") state.selectedId = nextSelectedId;
+    },
   },
 });
 
@@ -66,6 +77,7 @@ export const {
   SelectedIdChanged: selectedIdChangedAction,
   addComponent: addComponentAction,
   changeComponent: changeComponentAction,
+  deleteComponent: deleteComponentAction,
 } = componentsSlice.actions;
 
 export default componentsSlice.reducer;

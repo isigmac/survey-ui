@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./EditHeader.module.scss";
 import { Button, Typography, Space } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
+import EditToolbar from "./EditToolbar";
 
 const EditHeader: FC = () => {
   const nav = useNavigate();
@@ -21,7 +22,9 @@ const EditHeader: FC = () => {
             <Title className={styles["survey-title"]}>Survey Title</Title>
           </Space>
         </div>
-        <div className={styles.center}>center</div>
+        <div className={styles.center}>
+          <EditToolbar></EditToolbar>
+        </div>
         <div className={styles.right}>
           {" "}
           <Space direction="horizontal">
