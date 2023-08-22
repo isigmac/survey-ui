@@ -1,4 +1,4 @@
-import { ComponentInfo } from "./index";
+import { ComponentInfo, ComponentState } from "./index";
 
 export function getNextSelectedId(delete_id: string, componentList: ComponentInfo[]) {
   const availableComponents = getAvailableComponents();
@@ -15,4 +15,16 @@ export function getNextSelectedId(delete_id: string, componentList: ComponentInf
   function getAvailableComponents() {
     return componentList.filter((c) => !c.isHidden);
   }
+}
+
+export function insertComponent(state: ComponentState, newComponent: ComponentInfo) {
+  const { selectedId } = state;
+  const index = state.componentList.findIndex((c) => c.fe_id === selectedId);
+
+  if (index < 0) {
+    state.componentList.push(newComponent);
+  } else {
+    state.componentList.splice(index + 1, 0, newComponent);
+  }
+  state.selectedId = newComponent.fe_id;
 }

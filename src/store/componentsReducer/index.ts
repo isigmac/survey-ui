@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ComponentProps } from "../../components/QuestionComponents";
-import { getNextSelectedId } from "./utilities";
+import { getNextSelectedId, insertComponent } from "./utilities";
+import { nanoid } from "nanoid";
+import cloneDeep from "lodash.clonedeep";
 
 export type ComponentInfo = {
   fe_id: string; // todo
@@ -15,11 +17,13 @@ export type ComponentState = {
   //   componentList: Array<ComponentInfo>
   componentList: ComponentInfo[];
   selectedId: string;
+  copiedComponent?: ComponentInfo | null;
 };
 
 const INIT_STATE: ComponentState = {
   componentList: [],
   selectedId: "",
+  copiedComponent: null,
 };
 
 const componentsSlice = createSlice({
@@ -42,15 +46,7 @@ const componentsSlice = createSlice({
     addComponent(state: ComponentState, action: PayloadAction<ComponentInfo>) {
       const newComponent = action.payload;
 
-      const { selectedId } = state;
-      const index = state.componentList.findIndex((c) => c.fe_id === selectedId);
-
-      if (index < 0) {
-        state.componentList.push(newComponent);
-      } else {
-        state.componentList.splice(index + 1, 0, newComponent);
-      }
-      state.selectedId = newComponent.fe_id;
+      insertComponent(state, newComponent);
     },
 
     //change component props
@@ -94,6 +90,26 @@ const componentsSlice = createSlice({
 
       target.isLocked = !target.isLocked;
     },
+
+    //copy selected component
+    copyComponent(state: ComponentState) {
+      if (!state.selectedId) return;
+
+      const target = state.componentList.find((c) => c.fe_id === state.selectedId);
+      if (!target) return;
+
+      state.copiedComponent = cloneDeep(target);
+    },
+
+    //paste copied component
+    pasteComponent(state: ComponentState) {
+      if (!state.copiedComponent) return;
+      const newComponent = state.copiedComponent;
+      const newId = nanoid();
+      newComponent.fe_id = newId;
+
+      insertComponent(state, newComponent);
+    },
   },
 });
 
@@ -105,6 +121,8 @@ export const {
   deleteComponent: deleteComponentAction,
   hideOrDisplayComponent: hideComponentAction,
   lockUnlockComponent: lockUnlockComponentAction,
+  copyComponent: copyComponentAction,
+  pasteComponent: pasteComponentAction,
 } = componentsSlice.actions;
 
 export default componentsSlice.reducer;
