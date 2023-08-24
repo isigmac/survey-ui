@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import cloneDeep from "lodash.clonedeep";
 
 export type ComponentInfo = {
-  fe_id: string; // todo
+  fe_id: string;
   type: string;
   title: string;
   isHidden?: boolean;

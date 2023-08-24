@@ -8,6 +8,6 @@ export type QuestionInputProps = {
 };
 
 export const QuestionInputPropsDefault: QuestionInputProps = {
-  title: "input title",
+  title: "Input Title",
   placeholder: "please input...",
 };

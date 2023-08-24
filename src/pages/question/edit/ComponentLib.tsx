@@ -19,6 +19,8 @@ function BuildComponent(componentConfig: ComponentConfig) {
       title: title,
       type: type,
       props: defaultProps,
+      isHidden: false,
+      isLocked: false,
     };
     dispatch(addComponentAction(newComponent));
   }
