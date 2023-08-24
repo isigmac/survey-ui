@@ -2,7 +2,7 @@ import { FC } from "react";
 
 //ui
 import { Typography } from "antd";
-import { QuestionSubtitleProps, QuestionSubtitleDefault } from "./interface.ts";
+import { QuestionSubtitleProps, QuestionSubtitleDefault } from "./interface";
 
 const QuestionSubtitle: FC<QuestionSubtitleProps> = (props: QuestionSubtitleProps) => {
   const { text, level = 1, isCenter } = { ...QuestionSubtitleDefault, ...props };

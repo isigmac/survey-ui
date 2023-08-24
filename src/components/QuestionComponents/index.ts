@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { QuestionInputConfigDefault, QuestionInputProps } from "./QuestionInput";
+import { QuestionInputConfig, QuestionInputProps } from "./QuestionInput";
 import QuestionSubtitleConfig, { QuestionSubtitleProps } from "./QuestionSubtitle";
 import { QuestionParagraphConfig, QuestionParagraphProps } from "./QuestionParagraph";
 import { QuestionInfoConfig, QuestionInfoProps } from "./QuestionInfo";
@@ -15,7 +15,7 @@ export type ComponentConfig = {
 };
 
 const componentConfigList: ComponentConfig[] = [
-  QuestionInputConfigDefault,
+  QuestionInputConfig,
   QuestionSubtitleConfig,
   QuestionParagraphConfig,
   QuestionInfoConfig,
@@ -27,7 +27,7 @@ export const componentConfigGroup = [
     groupName: "Text Display",
     components: [QuestionInfoConfig, QuestionSubtitleConfig, QuestionParagraphConfig],
   },
-  { id: 2, groupName: "User Input", components: [QuestionInputConfigDefault] },
+  { id: 2, groupName: "User Input", components: [QuestionInputConfig] },
 ];
 
 export function getComponentConfigByType(type: string): ComponentConfig {

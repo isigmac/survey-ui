@@ -5,7 +5,7 @@ import { QuestionSubtitleDefault } from "./interface.ts";
 export * from "./interface.ts";
 
 export default {
-  title: "Sub Title",
+  title: "Subtitle",
   type: "questionSubtitle",
   Component,
   PropComponent,
