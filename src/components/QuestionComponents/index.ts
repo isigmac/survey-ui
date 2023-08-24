@@ -3,8 +3,22 @@ import { QuestionInputConfig, QuestionInputProps } from "./QuestionInput";
 import QuestionSubtitleConfig, { QuestionSubtitleProps } from "./QuestionSubtitle";
 import { QuestionParagraphConfig, QuestionParagraphProps } from "./QuestionParagraph";
 import { QuestionInfoConfig, QuestionInfoProps } from "./QuestionInfo";
+import { QuestionTextAreaConfig } from "./QuestionTextArea";
+import { QuestionTextAreaProps } from "./QuestionTextArea/interface";
 
-export type ComponentProps = QuestionInputProps & QuestionSubtitleProps & QuestionParagraphProps & QuestionInfoProps;
+const componentConfigList: ComponentConfig[] = [
+  QuestionInputConfig,
+  QuestionSubtitleConfig,
+  QuestionParagraphConfig,
+  QuestionInfoConfig,
+  QuestionTextAreaConfig,
+];
+
+type ComponentProps = QuestionInfoProps &
+  QuestionSubtitleProps &
+  QuestionParagraphProps &
+  QuestionInputProps &
+  QuestionTextAreaProps;
 
 export type ComponentConfig = {
   title: string;
@@ -14,20 +28,13 @@ export type ComponentConfig = {
   defaultProps: ComponentProps;
 };
 
-const componentConfigList: ComponentConfig[] = [
-  QuestionInputConfig,
-  QuestionSubtitleConfig,
-  QuestionParagraphConfig,
-  QuestionInfoConfig,
-];
-
 export const componentConfigGroup = [
   {
     id: 1,
     groupName: "Text Display",
     components: [QuestionInfoConfig, QuestionSubtitleConfig, QuestionParagraphConfig],
   },
-  { id: 2, groupName: "User Input", components: [QuestionInputConfig] },
+  { id: 2, groupName: "User Input", components: [QuestionInputConfig, QuestionTextAreaConfig] },
 ];
 
 export function getComponentConfigByType(type: string): ComponentConfig {
