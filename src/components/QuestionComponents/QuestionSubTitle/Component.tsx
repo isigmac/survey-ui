@@ -2,10 +2,10 @@ import { FC } from "react";
 
 //ui
 import { Typography } from "antd";
-import { QuestionTitleProps, QuestionTitleDefault } from "./interface.ts";
+import { QuestionSubtitleProps, QuestionSubtitleDefault } from "./interface.ts";
 
-const QuestionTitle: FC<QuestionTitleProps> = (props: QuestionTitleProps) => {
-  const { text, level = 1, isCenter } = { ...QuestionTitleDefault, ...props };
+const QuestionSubtitle: FC<QuestionSubtitleProps> = (props: QuestionSubtitleProps) => {
+  const { text, level = 1, isCenter } = { ...QuestionSubtitleDefault, ...props };
   const { Title } = Typography;
 
   const getFontSize = (level: number) => {
@@ -24,4 +24,4 @@ const QuestionTitle: FC<QuestionTitleProps> = (props: QuestionTitleProps) => {
   );
 };
 
-export default QuestionTitle;
+export default QuestionSubtitle;

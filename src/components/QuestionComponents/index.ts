@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { QuestionInputConfigDefault, QuestionInputProps } from "./QuestionInput";
-import QuestionTitleConfig, { QuestionTitleProps } from "./QuestionTitle";
+import QuestionSubtitleConfig, { QuestionSubtitleProps } from "./QuestionSubtitle";
 import { QuestionParagraphConfig, QuestionParagraphProps } from "./QuestionParagraph";
+import { QuestionInfoConfig, QuestionInfoProps } from "./QuestionInfo";
 
-export type ComponentProps = QuestionInputProps & QuestionTitleProps & QuestionParagraphProps;
+export type ComponentProps = QuestionInputProps & QuestionSubtitleProps & QuestionParagraphProps & QuestionInfoProps;
 
 export type ComponentConfig = {
   title: string;
@@ -15,12 +16,17 @@ export type ComponentConfig = {
 
 const componentConfigList: ComponentConfig[] = [
   QuestionInputConfigDefault,
-  QuestionTitleConfig,
+  QuestionSubtitleConfig,
   QuestionParagraphConfig,
+  QuestionInfoConfig,
 ];
 
 export const componentConfigGroup = [
-  { id: 1, groupName: "Text Display", components: [QuestionTitleConfig, QuestionParagraphConfig] },
+  {
+    id: 1,
+    groupName: "Text Display",
+    components: [QuestionInfoConfig, QuestionSubtitleConfig, QuestionParagraphConfig],
+  },
   { id: 2, groupName: "User Input", components: [QuestionInputConfigDefault] },
 ];
 

@@ -1,11 +1,11 @@
 import { FC, useEffect } from "react";
 
-import { QuestionTitleProps } from "./interface";
+import { QuestionSubtitleProps } from "./interface";
 
 //ui
 import { Form, Input, Select, Checkbox } from "antd";
 
-const PropComponent: FC<QuestionTitleProps> = (props: QuestionTitleProps) => {
+const PropComponent: FC<QuestionSubtitleProps> = (props: QuestionSubtitleProps) => {
   const { text, level, isCenter, onChange, disabled } = props;
   const [form] = Form.useForm();
 

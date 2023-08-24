@@ -1,13 +1,13 @@
 import Component from "./Component.tsx";
 import PropComponent from "./PropComponent.tsx";
-import { QuestionTitleDefault } from "./interface.ts";
+import { QuestionSubtitleDefault } from "./interface.ts";
 
 export * from "./interface.ts";
 
 export default {
-  title: "Title",
-  type: "questionTitle",
+  title: "Sub Title",
+  type: "questionSubtitle",
   Component,
   PropComponent,
-  defaultProps: QuestionTitleDefault,
+  defaultProps: QuestionSubtitleDefault,
 };
