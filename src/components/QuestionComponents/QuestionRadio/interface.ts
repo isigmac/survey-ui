@@ -14,7 +14,7 @@ export type QuestionRadioProps = {
 };
 
 export const QuestionRadioPropsDefault = {
-  title: "Favorite Restaurant",
+  title: "Radio",
   isVertical: false,
   options: [
     { value: "k1", text: "Option A" },

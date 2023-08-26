@@ -7,6 +7,8 @@ import { QuestionTextAreaConfig } from "./QuestionTextArea";
 import { QuestionTextAreaProps } from "./QuestionTextArea/interface";
 import { QuestionRadioProps } from "./QuestionRadio/interface";
 import { QuestionRadioConfig } from "./QuestionRadio";
+import { QuestionCheckboxConfig } from "./QuestionCheckbox";
+import { QuestionCheckboxProps } from "./QuestionCheckbox/interface";
 
 const componentConfigList: ComponentConfig[] = [
   QuestionInputConfig,
@@ -15,6 +17,7 @@ const componentConfigList: ComponentConfig[] = [
   QuestionInfoConfig,
   QuestionTextAreaConfig,
   QuestionRadioConfig,
+  QuestionCheckboxConfig,
 ];
 
 type ComponentProps = QuestionInfoProps &
@@ -22,7 +25,8 @@ type ComponentProps = QuestionInfoProps &
   QuestionParagraphProps &
   QuestionInputProps &
   QuestionTextAreaProps &
-  QuestionRadioProps;
+  QuestionRadioProps &
+  QuestionCheckboxProps;
 
 export type ComponentPropsBase = {
   onChange?: (newProps: QuestionTextAreaProps) => void;
@@ -43,7 +47,11 @@ export const componentConfigGroup = [
     groupName: "Text Display",
     components: [QuestionInfoConfig, QuestionSubtitleConfig, QuestionParagraphConfig],
   },
-  { id: 2, groupName: "User Input", components: [QuestionInputConfig, QuestionTextAreaConfig, QuestionRadioConfig] },
+  {
+    id: 2,
+    groupName: "User Input",
+    components: [QuestionInputConfig, QuestionTextAreaConfig, QuestionRadioConfig, QuestionCheckboxConfig],
+  },
 ];
 
 export function getComponentConfigByType(type: string): ComponentConfig {

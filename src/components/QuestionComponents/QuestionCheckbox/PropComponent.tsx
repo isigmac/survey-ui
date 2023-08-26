@@ -1,46 +1,48 @@
 import { FC } from "react";
-import { QuestionRadioProps, RadioOption } from "./interface";
-import { Button, Checkbox, Form, Input, Select, Space } from "antd";
+import { CheckboxOption, QuestionCheckboxProps } from "./interface";
+import { Button, Checkbox, Form, Input, Space } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { nanoid } from "nanoid";
 
-const PropComponent: FC<QuestionRadioProps> = (props: QuestionRadioProps) => {
-  const { title, options = [], isVertical, value, onChange, disabled } = props;
+const PropComponent: FC<QuestionCheckboxProps> = (props: QuestionCheckboxProps) => {
+  const { title, options = [], isVertical, onChange, disabled } = props;
   const [form] = Form.useForm();
 
   const handleValueChange = () => {
     if (onChange) {
       const newValues = form.getFieldsValue();
-      const { options = [] } = newValues;
+      const { options } = newValues;
 
-      options.forEach((o: RadioOption) => {
+      options.forEach((o: CheckboxOption) => {
         if (o.value) return;
+
         o.value = nanoid(5);
       });
 
+      console.log(JSON.stringify(options));
       onChange(newValues);
     }
   };
 
   return (
     <Form
-      layout="vertical"
       form={form}
-      initialValues={{ value, title, options, isVertical }}
-      onValuesChange={handleValueChange}
+      initialValues={{ title, options, isVertical }}
       disabled={disabled}
+      onValuesChange={handleValueChange}
+      layout="vertical"
     >
       <Form.Item
         name="title"
-        label="Radio Title"
+        label="Checkbox Title"
         rules={[
           {
             required: true,
-            message: "Please input radio title.",
+            message: "Please input a title!",
           },
         ]}
       >
-        <Input></Input>
+        <Input placeholder="input checkbox title"></Input>
       </Form.Item>
 
       <Form.Item label="Options">
@@ -50,19 +52,23 @@ const PropComponent: FC<QuestionRadioProps> = (props: QuestionRadioProps) => {
               {fields.map(({ key, name }, index) => {
                 return (
                   <Space key={key} align="baseline">
+                    <Form.Item name={[name, "checked"]} valuePropName="checked">
+                      <Checkbox></Checkbox>
+                    </Form.Item>
+
                     {/* input of current option  */}
                     <Form.Item
                       name={[name, "text"]}
                       rules={[
                         {
                           required: true,
-                          message: " Please input option descrition.",
+                          message: " Please input option description.",
                         },
                         {
                           validator(_, value) {
                             const { options = [] } = form.getFieldsValue();
 
-                            const isDuplicated = options.filter((o: RadioOption) => o.text === value).length > 1;
+                            const isDuplicated = options.filter((o: CheckboxOption) => o.text === value).length > 1;
 
                             if (isDuplicated) {
                               return Promise.reject(new Error("It's a duplicated option!"));
@@ -71,7 +77,7 @@ const PropComponent: FC<QuestionRadioProps> = (props: QuestionRadioProps) => {
                         },
                       ]}
                     >
-                      <Input placeholder="Input option descrition"></Input>
+                      <Input placeholder="Input option description"></Input>
                     </Form.Item>
 
                     {/* delete action for current option */}
@@ -80,7 +86,12 @@ const PropComponent: FC<QuestionRadioProps> = (props: QuestionRadioProps) => {
                 );
               })}
               <Form.Item>
-                <Button type="link" onClick={() => add({ value: "", text: "" })} icon={<PlusOutlined />} block>
+                <Button
+                  type="link"
+                  onClick={() => add({ value: "", text: "", checked: false })}
+                  icon={<PlusOutlined />}
+                  block
+                >
                   Add
                 </Button>
               </Form.Item>
@@ -89,17 +100,8 @@ const PropComponent: FC<QuestionRadioProps> = (props: QuestionRadioProps) => {
         </Form.List>
       </Form.Item>
 
-      <Form.Item name="value" label="Default Option">
-        <Select
-          value={value}
-          options={options.map(({ value, text }) => {
-            return { value, label: text || "" };
-          })}
-        ></Select>
-      </Form.Item>
-
-      <Form.Item name="isVertical" label="Display in vertical" valuePropName="checked">
-        <Checkbox name="isVerticalCheckBox">Display in Vertical</Checkbox>
+      <Form.Item name="isVertical" valuePropName="checked" label="Display Settings">
+        <Checkbox>Display in Vertical</Checkbox>
       </Form.Item>
     </Form>
   );
