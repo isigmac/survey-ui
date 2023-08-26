@@ -34,6 +34,7 @@ const PropComponent: FC<QuestionTextAreaProps> = (props: QuestionTextAreaProps) 
       >
         <Input></Input>
       </Form.Item>
+
       <Form.Item name="placeholder" label="Placeholder">
         <Input.TextArea rows={4}></Input.TextArea>
       </Form.Item>
