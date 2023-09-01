@@ -20,7 +20,7 @@ const componentConfigList: ComponentConfig[] = [
   QuestionCheckboxConfig,
 ];
 
-type ComponentProps = QuestionInfoProps &
+export type ComponentProps = QuestionInfoProps &
   QuestionSubtitleProps &
   QuestionParagraphProps &
   QuestionInputProps &
