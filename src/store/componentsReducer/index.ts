@@ -132,6 +132,19 @@ const componentsSlice = createSlice({
       if (index === componentList.length - 1) return;
       state.selectedId = componentList[index + 1].fe_id;
     },
+
+    //modify title
+    modifyComponentTitle(state: ComponentState, action: PayloadAction<{ id: string; newTitle: string }>) {
+      const { id, newTitle } = action.payload;
+      if (!newTitle) return;
+      if (!id) return;
+
+      const target = state.componentList.find((c) => c.fe_id === id);
+      if (!target) return;
+
+      target.props.title = newTitle;
+      target.title = newTitle;
+    },
   },
 });
 
@@ -147,6 +160,7 @@ export const {
   pasteComponent: pasteComponentAction,
   selectPreviousComponent: selectPreviousComponentAction,
   selectNextComponent: selectNextComponentAction,
+  modifyComponentTitle: modifyComponentTitleAction,
 } = componentsSlice.actions;
 
 export default componentsSlice.reducer;

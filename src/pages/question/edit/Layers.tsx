@@ -1,29 +1,43 @@
-import { FC } from "react";
-import classNames from "classnames";
-import { message } from "antd";
+import { ChangeEvent, FC, useState } from "react";
 import { useDispatch } from "react-redux";
 import useGetComponentsInfo from "../../../hooks/useGetComponentsInfo";
-import { selectedIdChangedAction } from "../../../store/componentsReducer";
+import { modifyComponentTitleAction, selectedIdChangedAction } from "../../../store/componentsReducer";
 
 //ui
 import styles from "./Layers.module.scss";
+import { Input, message } from "antd";
+import classNames from "classnames";
 
 const Layers: FC = () => {
   const { componentList, selectedId } = useGetComponentsInfo();
   const dispatch = useDispatch();
 
+  const [editingTitleId, setEditTitleId] = useState("");
+
   // 点击选中组件
   function handleTitleClick(fe_id: string) {
-    const curComp = componentList.find((c) => c.fe_id === fe_id);
-    if (curComp && curComp.isHidden) {
+    const currentComponent = componentList.find((c) => c.fe_id === fe_id);
+    if (currentComponent && currentComponent.isHidden) {
       message.info("不能选中隐藏的组件");
       return;
     }
+
     if (fe_id !== selectedId) {
       // 当前组件未被选中，执行选中
       dispatch(selectedIdChangedAction(fe_id));
+      setEditTitleId("");
       return;
     }
+
+    setEditTitleId(fe_id);
+  }
+
+  //edit title
+  function changeTitle(event: ChangeEvent<HTMLInputElement>) {
+    const newTitle = event.currentTarget.value.trim();
+    if (!newTitle) return;
+    if (!selectedId) return;
+    dispatch(modifyComponentTitleAction({ id: selectedId, newTitle }));
   }
 
   return (
@@ -47,7 +61,19 @@ const Layers: FC = () => {
                 handleTitleClick(fe_id);
               }}
             >
-              {title}
+              {editingTitleId === fe_id && (
+                <Input
+                  value={title}
+                  onPressEnter={() => {
+                    handleTitleClick("");
+                  }}
+                  onBlur={() => {
+                    handleTitleClick("");
+                  }}
+                  onChange={changeTitle}
+                ></Input>
+              )}
+              {editingTitleId !== fe_id && title}
             </div>
             <div className={styles.handler}>Button</div>
           </div>
