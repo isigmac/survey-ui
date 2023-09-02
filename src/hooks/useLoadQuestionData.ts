@@ -5,6 +5,7 @@ import { useRequest } from "ahooks";
 import { resetComponentsAction } from "../store/componentsReducer";
 
 import { getQuestionService } from "../services/question";
+import { resetPageInfoAction } from "../store/pageInfoReducer";
 
 function useLoadQuestionData() {
   const { id = "" } = useParams();
@@ -27,7 +28,7 @@ function useLoadQuestionData() {
   useEffect(() => {
     if (!data) return;
 
-    const { componentList = [] } = data;
+    const { componentList = [], title = "", description = "", js = "", css = "" } = data;
 
     //default selected first component
     let selectedId = "";
@@ -35,6 +36,8 @@ function useLoadQuestionData() {
 
     // store components list into redux store
     dispatch(resetComponentsAction({ componentList: componentList, selectedId: selectedId }));
+
+    dispatch(resetPageInfoAction({ title, description, js, css }));
   }, [data, dispatch]);
 
   // execute ajax by id

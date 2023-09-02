@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userReducer";
 import componentReducer from "./componentsReducer";
+import pageInfoReducer from "./pageInfoReducer";
 
 const store = configureStore({
   reducer: {
@@ -8,7 +9,8 @@ const store = configureStore({
 
     // components state (complex, undo/redo)
     components: componentReducer,
-    //
+
+    pageInfo: pageInfoReducer,
   },
 });
 
