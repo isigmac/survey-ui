@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useDispatch } from "react-redux";
 import {
   deleteComponentAction,
-  hideComponentAction,
+  hideUnHideComponentAction,
   lockUnlockComponentAction,
   copyComponentAction,
   pasteComponentAction,
@@ -22,12 +22,12 @@ const EditToolbar: FC = () => {
     dispatch(deleteComponentAction());
   }
 
-  function handleHide() {
-    dispatch(hideComponentAction());
+  function handleHide(id: string) {
+    dispatch(hideUnHideComponentAction(id));
   }
 
-  function handleLock() {
-    dispatch(lockUnlockComponentAction());
+  function handleLock(id: string) {
+    dispatch(lockUnlockComponentAction(id));
   }
 
   function handleCopy() {
@@ -53,7 +53,7 @@ const EditToolbar: FC = () => {
           <Button
             shape="circle"
             icon={<EyeInvisibleOutlined />}
-            onClick={handleHide}
+            onClick={() => handleHide(selectedId)}
             disabled={!selectedId || isLocked}
           ></Button>
         </Tooltip>
@@ -61,7 +61,7 @@ const EditToolbar: FC = () => {
           <Button
             shape="circle"
             icon={<LockOutlined />}
-            onClick={handleLock}
+            onClick={() => handleLock(selectedId)}
             type={isLocked ? "primary" : "default"}
             disabled={!selectedId}
           ></Button>

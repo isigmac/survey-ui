@@ -70,22 +70,25 @@ const componentsSlice = createSlice({
     },
 
     //hide selected component
-    hideOrDisplayComponent(state: ComponentState) {
-      const { selectedId } = state;
-      const target = state.componentList.find((c) => c.fe_id === selectedId);
+    hideOrDisplayComponent(state: ComponentState, action: PayloadAction<string>) {
+      const id = action.payload;
+      if (!id) return;
 
+      const target = state.componentList.find((c) => c.fe_id === id);
       if (!target) return;
 
-      const nextSelectedId = getNextSelectedId(selectedId, state.componentList);
+      const nextSelectedId = getNextSelectedId(id, state.componentList);
       target.isHidden = !target.isHidden;
 
       state.selectedId = nextSelectedId;
     },
 
     //lock selected component
-    lockUnlockComponent(state: ComponentState) {
-      const { selectedId } = state;
-      const target = state.componentList.find((c) => c.fe_id === selectedId);
+    lockUnlockComponent(state: ComponentState, action: PayloadAction<string>) {
+      const id = action.payload;
+      if (!id) return;
+
+      const target = state.componentList.find((c) => c.fe_id === id);
       if (!target) return;
 
       target.isLocked = !target.isLocked;
@@ -142,7 +145,6 @@ const componentsSlice = createSlice({
       const target = state.componentList.find((c) => c.fe_id === id);
       if (!target) return;
 
-      target.props.title = newTitle;
       target.title = newTitle;
     },
   },
@@ -154,7 +156,7 @@ export const {
   addComponent: addComponentAction,
   changeComponent: changeComponentAction,
   deleteComponent: deleteComponentAction,
-  hideOrDisplayComponent: hideComponentAction,
+  hideOrDisplayComponent: hideUnHideComponentAction,
   lockUnlockComponent: lockUnlockComponentAction,
   copyComponent: copyComponentAction,
   pasteComponent: pasteComponentAction,
