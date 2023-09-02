@@ -24,9 +24,14 @@ const componentsSlice = createSlice({
       state.js = action.payload.js;
       state.css = action.payload.css;
     },
+
+    changeSurveyTitle(state: PageInfo, action: PayloadAction<string>) {
+      state.title = action.payload;
+    },
   },
 });
 
-export const { resetPageInfo: resetPageInfoAction } = componentsSlice.actions;
+export const { resetPageInfo: resetPageInfoAction, changeSurveyTitle: changeSurveyTitleAction } =
+  componentsSlice.actions;
 
 export default componentsSlice.reducer;
