@@ -28,7 +28,7 @@ function useLoadQuestionData() {
   useEffect(() => {
     if (!data) return;
 
-    const { componentList = [], title = "", description = "", js = "", css = "" } = data;
+    const { id = "", componentList = [], title = "", description = "", js = "", css = "" } = data;
 
     //default selected first component
     let selectedId = "";
@@ -37,7 +37,7 @@ function useLoadQuestionData() {
     // store components list into redux store
     dispatch(resetComponentsAction({ componentList: componentList, selectedId: selectedId }));
 
-    dispatch(resetPageInfoAction({ title, description, js, css }));
+    dispatch(resetPageInfoAction({ id, title, description, js, css }));
   }, [data, dispatch]);
 
   // execute ajax by id

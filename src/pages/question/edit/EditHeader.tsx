@@ -4,11 +4,34 @@ import useGetPageInfo from "../../../hooks/useGetPageInfo";
 
 //ui
 import { Button, Typography, Space, Input } from "antd";
-import { EditOutlined, LeftOutlined } from "@ant-design/icons";
+import { EditOutlined, LeftOutlined, LoadingOutlined } from "@ant-design/icons";
 import styles from "./EditHeader.module.scss";
 import EditToolbar from "./EditToolbar";
 import { useDispatch } from "react-redux";
 import { changeSurveyTitleAction } from "../../../store/pageInfoReducer";
+import useGetComponentsInfo from "../../../hooks/useGetComponentsInfo";
+import { updateQuestionService } from "../../../services/question";
+import { useRequest } from "ahooks";
+
+const SaveButton: FC = () => {
+  const { componentList } = useGetComponentsInfo();
+  const pageInformation = useGetPageInfo();
+
+  const { loading, run: save } = useRequest(
+    async () => {
+      await updateQuestionService(pageInformation.id, { ...pageInformation, componentList });
+    },
+    {
+      manual: true,
+    }
+  );
+
+  return (
+    <Button type="link" onClick={save} disabled={loading} icon={loading ? <LoadingOutlined /> : null}>
+      Save
+    </Button>
+  );
+};
 
 const SurveyTitle: FC = () => {
   const { Title } = Typography;
@@ -65,7 +88,7 @@ const EditHeader: FC = () => {
         <div className={styles.right}>
           {" "}
           <Space direction="horizontal">
-            <Button type="link">Save</Button>
+            <SaveButton />
             <Button type="primary">Publish</Button>
           </Space>
         </div>
