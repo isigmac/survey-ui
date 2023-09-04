@@ -1,21 +1,29 @@
 import { ChangeEvent, FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useGetPageInfo from "../../../hooks/useGetPageInfo";
+import { useDispatch } from "react-redux";
+import { changeSurveyTitleAction } from "../../../store/pageInfoReducer";
+import useGetComponentsInfo from "../../../hooks/useGetComponentsInfo";
+import { updateQuestionService } from "../../../services/question";
+import { useKeyPress, useRequest } from "ahooks";
 
 //ui
 import { Button, Typography, Space, Input } from "antd";
 import { EditOutlined, LeftOutlined, LoadingOutlined } from "@ant-design/icons";
 import styles from "./EditHeader.module.scss";
 import EditToolbar from "./EditToolbar";
-import { useDispatch } from "react-redux";
-import { changeSurveyTitleAction } from "../../../store/pageInfoReducer";
-import useGetComponentsInfo from "../../../hooks/useGetComponentsInfo";
-import { updateQuestionService } from "../../../services/question";
-import { useRequest } from "ahooks";
 
 const SaveButton: FC = () => {
   const { componentList } = useGetComponentsInfo();
   const pageInformation = useGetPageInfo();
+
+  //shortcuts
+  useKeyPress(["ctrl.s", "meta.s"], (event: KeyboardEvent) => {
+    event.preventDefault();
+    if (!loading) {
+      save();
+    }
+  });
 
   const { loading, run: save } = useRequest(
     async () => {
