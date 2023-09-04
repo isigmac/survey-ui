@@ -1,17 +1,45 @@
 import { ChangeEvent, FC, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useGetPageInfo from "../../../hooks/useGetPageInfo";
 import { useDispatch } from "react-redux";
 import { changeSurveyTitleAction } from "../../../store/pageInfoReducer";
 import useGetComponentsInfo from "../../../hooks/useGetComponentsInfo";
 import { updateQuestionService } from "../../../services/question";
-import { useKeyPress, useRequest } from "ahooks";
+import { useDebounceEffect, useKeyPress, useRequest } from "ahooks";
 
 //ui
-import { Button, Typography, Space, Input } from "antd";
+import { Button, Typography, Space, Input, message } from "antd";
 import { EditOutlined, LeftOutlined, LoadingOutlined } from "@ant-design/icons";
 import styles from "./EditHeader.module.scss";
 import EditToolbar from "./EditToolbar";
+import { QUESTION_STATISTICS_PATHNAME } from "../../../router";
+
+const PublishButton: FC = () => {
+  const { id } = useParams();
+  const { componentList } = useGetComponentsInfo();
+  const pageInfo = useGetPageInfo();
+  const nav = useNavigate();
+
+  const { loading, run: publish } = useRequest(
+    async () => {
+      if (!id) return;
+      await updateQuestionService(id, { ...pageInfo, componentList, isPublished: true });
+    },
+    {
+      manual: true,
+      onSuccess() {
+        message.success("success to publish");
+        nav(QUESTION_STATISTICS_PATHNAME + "/" + id);
+      },
+    }
+  );
+
+  return (
+    <Button type="primary" onClick={publish} disabled={loading} icon={loading ? <LoadingOutlined /> : null}>
+      Publish
+    </Button>
+  );
+};
 
 const SaveButton: FC = () => {
   const { componentList } = useGetComponentsInfo();
@@ -24,6 +52,17 @@ const SaveButton: FC = () => {
       save();
     }
   });
+
+  //auto save after data changed
+  useDebounceEffect(
+    () => {
+      save();
+    },
+    [pageInformation, componentList],
+    {
+      wait: 1000,
+    }
+  );
 
   const { loading, run: save } = useRequest(
     async () => {
@@ -97,7 +136,7 @@ const EditHeader: FC = () => {
           {" "}
           <Space direction="horizontal">
             <SaveButton />
-            <Button type="primary">Publish</Button>
+            <PublishButton />
           </Space>
         </div>
       </div>
