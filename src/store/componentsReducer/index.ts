@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ComponentProps } from "../../components/QuestionComponents";
-import { getNextSelectedId, insertComponent } from "./utilities";
+import { getNextSelectedId, insertComponent, switchComponent } from "./utilities";
 import { nanoid } from "nanoid";
 import cloneDeep from "lodash.clonedeep";
 
@@ -147,6 +147,12 @@ const componentsSlice = createSlice({
 
       target.title = newTitle;
     },
+
+    //switch component
+    switchComponent(state: ComponentState, action: PayloadAction<{ oldIndex: number; newIndex: number }>) {
+      const list = state.componentList;
+      state.componentList = switchComponent(list, action.payload.oldIndex, action.payload.newIndex);
+    },
   },
 });
 
@@ -163,6 +169,7 @@ export const {
   selectPreviousComponent: selectPreviousComponentAction,
   selectNextComponent: selectNextComponentAction,
   modifyComponentTitle: modifyComponentTitleAction,
+  switchComponent: switchComponentAction,
 } = componentsSlice.actions;
 
 export default componentsSlice.reducer;

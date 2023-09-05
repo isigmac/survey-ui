@@ -1,4 +1,5 @@
 import { ComponentInfo, ComponentState } from "./index";
+import { arrayMove } from "@dnd-kit/sortable";
 
 export function getNextSelectedId(delete_id: string, componentList: ComponentInfo[]) {
   const availableComponents = getAvailableComponents();
@@ -27,4 +28,8 @@ export function insertComponent(state: ComponentState, newComponent: ComponentIn
     state.componentList.splice(index + 1, 0, newComponent);
   }
   state.selectedId = newComponent.fe_id;
+}
+
+export function switchComponent(componentList: ComponentInfo[], oldIndex: number, newIndex: number): ComponentInfo[] {
+  return arrayMove(componentList, oldIndex, newIndex);
 }
