@@ -26,6 +26,7 @@ const SortableContainer: FC<SortableContainerProps> = (props: SortableContainerP
     if (active.id !== over.id) {
       const oldIndex = items.findIndex((c) => c.fe_id === active.id);
       const newIndex = items.findIndex((c) => c.fe_id === over.id);
+
       onDragEnd(oldIndex, newIndex);
     }
   }

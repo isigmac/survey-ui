@@ -1,6 +1,6 @@
 import { FC } from "react";
 import useGetComponentsInfo from "../../../hooks/useGetComponentsInfo";
-import { ComponentInfo } from "../../../store/componentsReducer";
+import { ComponentInfo, switchComponentAction } from "../../../store/componentsReducer";
 import { getComponentConfigByType } from "../../../components/QuestionComponents";
 import { useDispatch } from "react-redux";
 import { selectedIdChangedAction } from "../../../store/componentsReducer";
@@ -10,6 +10,8 @@ import useCanvasShortcuts from "../../../hooks/useCanvasShortcuts";
 import { Spin } from "antd";
 import styles from "./EditCanvas.module.scss";
 import classNames from "classnames";
+import SortableContainer from "../../../components/DragSortable/SortableContainer";
+import SortableItem from "../../../components/DragSortable/SortableItem";
 
 type PropsType = {
   loading: boolean;
@@ -47,34 +49,47 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
     );
   }
 
+  //convert components to sortable components
+  const sortableComponentList = componentList.map((c) => {
+    return { ...c, id: c.fe_id };
+  });
+
+  // handle dragend
+  function handleDragEnd(oldIndex: number, newIndex: number) {
+    dispatch(switchComponentAction({ oldIndex, newIndex }));
+  }
+
   const wrapperClassName = styles["component-wrapper"];
   const selectedClassName = styles["selected"];
   const lockedClassName = styles["locked"];
 
   return (
-    <div className={styles.canvas}>
-      {componentList
-        .filter((c) => c.isHidden === false)
-        .map((c) => {
-          const { fe_id } = c;
+    <SortableContainer items={sortableComponentList} onDragEnd={handleDragEnd}>
+      <div className={styles.canvas}>
+        {componentList
+          .filter((c) => c.isHidden === false)
+          .map((c) => {
+            const { fe_id } = c;
 
-          const itemClassName = classNames({
-            [wrapperClassName]: true,
-            [selectedClassName]: fe_id === selectedId,
-            [lockedClassName]: c.isLocked === true,
-          });
+            const itemClassName = classNames({
+              [wrapperClassName]: true,
+              [selectedClassName]: fe_id === selectedId,
+              [lockedClassName]: c.isLocked === true,
+            });
 
-          return (
-            <div
-              key={fe_id}
-              className={itemClassName}
-              onClick={(e: React.MouseEvent<Element, MouseEvent>) => handleClick(e, fe_id)}
-            >
-              <div className={styles["readonly-component"]}>{buildComponent(c)}</div>
-            </div>
-          );
-        })}
-    </div>
+            return (
+              <SortableItem id={fe_id} key={fe_id}>
+                <div
+                  className={itemClassName}
+                  onClick={(e: React.MouseEvent<Element, MouseEvent>) => handleClick(e, fe_id)}
+                >
+                  <div className={styles["readonly-component"]}>{buildComponent(c)}</div>
+                </div>
+              </SortableItem>
+            );
+          })}
+      </div>
+    </SortableContainer>
   );
 };
 
