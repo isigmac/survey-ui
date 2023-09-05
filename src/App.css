@@ -1,0 +1,7 @@
+.App {
+    background-color: #f5f5f5; 
+  }
+
+div[role="button"]{
+  outline: 0;
+}

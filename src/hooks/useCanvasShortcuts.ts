@@ -12,7 +12,12 @@ import useGetComponentsInfo from "./useGetComponentsInfo";
 function isActiveElementValid(selectedId: string) {
   const activeElement = document.activeElement;
 
+  //without dnd-kits
+  // if (activeElement === document.body && selectedId !== "") return true;
+
+  //with dnd-kits
   if (activeElement === document.body && selectedId !== "") return true;
+  if (activeElement?.matches('div[role="button"]')) return true;
 
   return false;
 }

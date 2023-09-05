@@ -6,17 +6,30 @@ import {
   lockUnlockComponentAction,
   copyComponentAction,
   pasteComponentAction,
+  switchComponentAction,
 } from "../../../store/componentsReducer";
 import useGetComponentsInfo from "../../../hooks/useGetComponentsInfo";
 
 //ui
 import { Space, Button, Tooltip } from "antd";
-import { DeleteOutlined, EyeInvisibleOutlined, LockOutlined, CopyOutlined, BlockOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EyeInvisibleOutlined,
+  LockOutlined,
+  CopyOutlined,
+  BlockOutlined,
+  UpOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 
 const EditToolbar: FC = () => {
   const dispatch = useDispatch();
-  const { selectedId, selectedComponent, copiedComponent } = useGetComponentsInfo();
+  const { selectedId, selectedComponent, copiedComponent, componentList } = useGetComponentsInfo();
   const { isLocked } = selectedComponent || {};
+
+  const selectedIndex = componentList.findIndex((c) => c.fe_id === selectedId);
+  const isTop = selectedIndex === 0;
+  const isBottom = selectedIndex === componentList.length - 1;
 
   function handleDelete() {
     dispatch(deleteComponentAction());
@@ -38,6 +51,16 @@ const EditToolbar: FC = () => {
     dispatch(pasteComponentAction());
   }
 
+  function handleMoveUp() {
+    if (isTop) return;
+    dispatch(switchComponentAction({ oldIndex: selectedIndex, newIndex: selectedIndex - 1 }));
+  }
+
+  function handleMoveDown() {
+    if (isBottom) return;
+    dispatch(switchComponentAction({ oldIndex: selectedIndex, newIndex: selectedIndex + 1 }));
+  }
+
   return (
     <div>
       <Space>
@@ -57,6 +80,7 @@ const EditToolbar: FC = () => {
             disabled={!selectedId || isLocked}
           ></Button>
         </Tooltip>
+
         <Tooltip title="lock">
           <Button
             shape="circle"
@@ -66,11 +90,21 @@ const EditToolbar: FC = () => {
             disabled={!selectedId}
           ></Button>
         </Tooltip>
+
         <Tooltip title="copy">
           <Button shape="circle" icon={<CopyOutlined />} onClick={handleCopy} disabled={!selectedId}></Button>
         </Tooltip>
+
         <Tooltip title="paste">
           <Button shape="circle" icon={<BlockOutlined />} onClick={handlePaste} disabled={!copiedComponent}></Button>
+        </Tooltip>
+
+        <Tooltip title="move up">
+          <Button shape="circle" icon={<UpOutlined />} onClick={handleMoveUp} disabled={isTop}></Button>
+        </Tooltip>
+
+        <Tooltip title="move down">
+          <Button shape="circle" icon={<DownOutlined />} onClick={handleMoveDown} disabled={isBottom}></Button>
         </Tooltip>
       </Space>
     </div>
