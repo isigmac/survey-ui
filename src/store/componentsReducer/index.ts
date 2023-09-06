@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ComponentProps } from "../../components/QuestionComponents";
-import { getNextSelectedId, insertComponent, switchComponent } from "./utilities";
+import { getNextSelectedId, insertComponent, redo, switchComponent, undo } from "./utilities";
 import { nanoid } from "nanoid";
 import cloneDeep from "lodash.clonedeep";
 
@@ -153,6 +153,16 @@ const componentsSlice = createSlice({
       const list = state.componentList;
       state.componentList = switchComponent(list, action.payload.oldIndex, action.payload.newIndex);
     },
+
+    //undo
+    undoComponentPropChange() {
+      undo();
+    },
+
+    //redo
+    redoComponentPropChange() {
+      redo();
+    },
   },
 });
 
@@ -170,6 +180,8 @@ export const {
   selectNextComponent: selectNextComponentAction,
   modifyComponentTitle: modifyComponentTitleAction,
   switchComponent: switchComponentAction,
+  undoComponentPropChange: undoComponentPropChangeAction,
+  redoComponentPropChange: redoComponentPropChangeAction,
 } = componentsSlice.actions;
 
 export default componentsSlice.reducer;

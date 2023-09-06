@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 //ui
 import { Form, Input } from "antd";
@@ -12,6 +12,10 @@ const PropComponent: FC<QuestionInfoProps> = (props: QuestionInfoProps) => {
   function handleValueChange() {
     if (onChange) onChange(form.getFieldsValue());
   }
+
+  useEffect(() => {
+    form.setFieldsValue({ title, text });
+  }, [form, title, text]);
 
   return (
     <Form

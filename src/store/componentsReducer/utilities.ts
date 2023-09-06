@@ -1,5 +1,6 @@
 import { ComponentInfo, ComponentState } from "./index";
 import { arrayMove } from "@dnd-kit/sortable";
+import { ActionCreators as UndoActionCreators } from "redux-undo";
 
 export function getNextSelectedId(delete_id: string, componentList: ComponentInfo[]) {
   const availableComponents = getAvailableComponents();
@@ -32,4 +33,12 @@ export function insertComponent(state: ComponentState, newComponent: ComponentIn
 
 export function switchComponent(componentList: ComponentInfo[], oldIndex: number, newIndex: number): ComponentInfo[] {
   return arrayMove(componentList, oldIndex, newIndex);
+}
+
+export function undo() {
+  UndoActionCreators.undo();
+}
+
+export function redo() {
+  UndoActionCreators.redo();
 }

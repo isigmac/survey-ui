@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { QuestionRadioProps, RadioOption } from "./interface";
 import { Button, Checkbox, Form, Input, Select, Space } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
@@ -7,6 +7,10 @@ import { nanoid } from "nanoid";
 const PropComponent: FC<QuestionRadioProps> = (props: QuestionRadioProps) => {
   const { title, options = [], isVertical, value, onChange, disabled } = props;
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    form.setFieldsValue({ value, title, options, isVertical });
+  }, [form, value, title, options, isVertical]);
 
   const handleValueChange = () => {
     if (onChange) {

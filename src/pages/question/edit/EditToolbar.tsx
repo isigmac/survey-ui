@@ -20,7 +20,11 @@ import {
   BlockOutlined,
   UpOutlined,
   DownOutlined,
+  UndoOutlined,
+  RedoOutlined,
 } from "@ant-design/icons";
+
+import { ActionCreators as UndoActionCreators } from "redux-undo";
 
 const EditToolbar: FC = () => {
   const dispatch = useDispatch();
@@ -59,6 +63,14 @@ const EditToolbar: FC = () => {
   function handleMoveDown() {
     if (isBottom) return;
     dispatch(switchComponentAction({ oldIndex: selectedIndex, newIndex: selectedIndex + 1 }));
+  }
+
+  function handleUndo() {
+    dispatch(UndoActionCreators.undo());
+  }
+
+  function handleRedo() {
+    dispatch(UndoActionCreators.redo());
   }
 
   return (
@@ -105,6 +117,14 @@ const EditToolbar: FC = () => {
 
         <Tooltip title="move down">
           <Button shape="circle" icon={<DownOutlined />} onClick={handleMoveDown} disabled={isBottom}></Button>
+        </Tooltip>
+
+        <Tooltip title="undo">
+          <Button shape="circle" icon={<UndoOutlined />} onClick={handleUndo}></Button>
+        </Tooltip>
+
+        <Tooltip title="redo">
+          <Button shape="circle" icon={<RedoOutlined />} onClick={handleRedo}></Button>
         </Tooltip>
       </Space>
     </div>

@@ -4,7 +4,7 @@ import { ComponentInfo, switchComponentAction } from "../../../store/componentsR
 import { getComponentConfigByType } from "../../../components/QuestionComponents";
 import { useDispatch } from "react-redux";
 import { selectedIdChangedAction } from "../../../store/componentsReducer";
-import useCanvasShortcuts from "../../../hooks/useCanvasShortcuts";
+import useCanvasShortcuts from "../../../hooks/useBindShortcuts";
 
 //ui
 import { Spin } from "antd";

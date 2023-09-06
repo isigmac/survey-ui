@@ -50,6 +50,9 @@ dependencies:
   react-router-dom:
     specifier: ^6.14.2
     version: 6.14.2(react-dom@18.2.0)(react@18.2.0)
+  redux-undo:
+    specifier: ^1.1.0
+    version: 1.1.0
   sass:
     specifier: ^1.64.2
     version: 1.64.2
@@ -3114,6 +3117,10 @@ packages:
       redux: ^4
     dependencies:
       redux: 4.2.1
+    dev: false
+
+  /redux-undo@1.1.0:
+    resolution: {integrity: sha512-zzLFh2qeF0MTIlzDhDLm9NtkfBqCllQJ3OCuIl5RKlG/ayHw6GUdIFdMhzMS9NnrnWdBX5u//ExMOHpfudGGOg==}
     dev: false
 
   /redux@4.2.1:

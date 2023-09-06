@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { CheckboxOption, QuestionCheckboxProps } from "./interface";
 import { Button, Checkbox, Form, Input, Space } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
@@ -7,6 +7,10 @@ import { nanoid } from "nanoid";
 const PropComponent: FC<QuestionCheckboxProps> = (props: QuestionCheckboxProps) => {
   const { title, options = [], isVertical, onChange, disabled } = props;
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    form.setFieldsValue({ title, options, isVertical });
+  }, [form, title, options, isVertical]);
 
   const handleValueChange = () => {
     if (onChange) {

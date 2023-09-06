@@ -4,8 +4,10 @@ import {
   copyComponentAction,
   deleteComponentAction,
   pasteComponentAction,
+  redoComponentPropChangeAction,
   selectNextComponentAction,
   selectPreviousComponentAction,
+  undoComponentPropChangeAction,
 } from "../store/componentsReducer";
 import useGetComponentsInfo from "./useGetComponentsInfo";
 
@@ -60,6 +62,28 @@ function useCanvasShortcuts() {
 
     dispatch(selectNextComponentAction());
   });
+
+  //undo
+  useKeyPress(
+    ["ctrl.z", "meta.z"],
+    () => {
+      dispatch(undoComponentPropChangeAction());
+    },
+    {
+      exactMatch: true,
+    }
+  );
+
+  //redo
+  useKeyPress(
+    ["ctrl.shift.z", "meta.shift.z"],
+    () => {
+      dispatch(redoComponentPropChangeAction());
+    },
+    {
+      exactMatch: true,
+    }
+  );
 }
 
 export default useCanvasShortcuts;

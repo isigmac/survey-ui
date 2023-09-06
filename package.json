@@ -28,6 +28,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.14.2",
+    "redux-undo": "^1.1.0",
     "sass": "^1.64.2",
     "utilities": "link:@dnd-kit/sortable,@dnd-kit/utilities"
   },
