@@ -11,7 +11,7 @@ const NotFound: FC = () => {
     <Result
       status="404"
       title="404"
-      Subtitle="Sorry, the page you visited does not exist."
+      subTitle="Sorry, the page you visited does not exist."
       extra={
         <Button type="primary" onClick={() => nav(MANAGE_LIST_PATHNAME)}>
           Back Home

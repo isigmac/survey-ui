@@ -4,6 +4,7 @@ export type PageInfo = {
   id: string;
   title: string;
   description?: string;
+  isPublished?: boolean;
   js?: string;
   css?: string;
 };
@@ -12,6 +13,7 @@ const INIT_STATE: PageInfo = {
   id: "",
   title: "",
   description: "",
+  isPublished: false,
   js: "",
   css: "",
 };
@@ -24,6 +26,7 @@ const componentsSlice = createSlice({
       state.id = action.payload.id ? action.payload.id : state.id;
       state.title = action.payload.title;
       state.description = action.payload.description;
+      state.isPublished = action.payload.isPublished;
       state.js = action.payload.js;
       state.css = action.payload.css;
     },
