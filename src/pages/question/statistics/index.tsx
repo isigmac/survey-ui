@@ -7,6 +7,8 @@ import useGetPageInfo from "../../../hooks/useGetPageInfo.ts";
 import { useNavigate } from "react-router-dom";
 import { useTitle } from "ahooks";
 
+import styles from "./index.module.scss";
+
 const Statistics: FC = () => {
   const { loading } = useLoadQuestionData();
   const { isPublished, title } = useGetPageInfo();
@@ -14,35 +16,43 @@ const Statistics: FC = () => {
 
   useTitle(`Statistics - ${title}`);
 
-  if (loading) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "60px" }}>
-        <Spin></Spin>
-      </div>
-    );
-  }
+  const LoadingElement = (
+    <div style={{ textAlign: "center", marginTop: "60px" }}>
+      <Spin></Spin>
+    </div>
+  );
 
-  if (!isPublished) {
+  function generateContentElement() {
+    if (!isPublished) {
+      return (
+        <div style={{ flex: "1" }}>
+          <Result
+            status="warning"
+            title="This survey is not published yet."
+            subTitle="Sorry, the page you visited does not exist."
+            extra={
+              <Button type="primary" onClick={() => nav(-1)}>
+                Return
+              </Button>
+            }
+          />
+        </div>
+      );
+    }
+
     return (
-      <div style={{ flex: "1" }}>
-        <Result
-          status="warning"
-          title="This survey is not published yet."
-          subTitle="Sorry, the page you visited does not exist."
-          extra={
-            <Button type="primary" onClick={() => nav(-1)}>
-              Return
-            </Button>
-          }
-        />
-      </div>
+      <>
+        <div className={styles.left}>left</div>
+        <div className={styles.main}>middle</div>
+        <div className={styles.right}>right</div>
+      </>
     );
   }
 
   return (
-    <div>
-      <p>Statistics: </p>
-      {/* {loading ? <p>loading</p> : <p>{loading}</p>} */}
+    <div className={styles["content-wrapper"]}>
+      {loading && LoadingElement}
+      <div className={styles.content}>{loading ? LoadingElement : generateContentElement()}</div>
     </div>
   );
 };
