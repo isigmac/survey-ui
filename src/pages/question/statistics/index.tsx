@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useTitle } from "ahooks";
 
 import styles from "./index.module.scss";
+import StatisticsHeader from "./StatisticsHeader.tsx";
 
 const Statistics: FC = () => {
   const { loading } = useLoadQuestionData();
@@ -50,9 +51,12 @@ const Statistics: FC = () => {
   }
 
   return (
-    <div className={styles["content-wrapper"]}>
-      {loading && LoadingElement}
-      <div className={styles.content}>{loading ? LoadingElement : generateContentElement()}</div>
+    <div className={styles.container}>
+      <StatisticsHeader />
+      <div className={styles["content-wrapper"]}>
+        {loading && LoadingElement}
+        <div className={styles.content}>{loading ? LoadingElement : generateContentElement()}</div>
+      </div>
     </div>
   );
 };
